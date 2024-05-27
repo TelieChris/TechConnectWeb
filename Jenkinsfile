@@ -2,6 +2,14 @@ pipeline {
     agent any
     
     stages {
+        stage('Setup Python Environment') {
+            steps {
+                script {
+                    bat 'python --version'  // Verify Python installation
+                    bat 'pip --version'     // Verify pip installation
+                }
+            }
+        }
         stage('Build') {
             steps {
                 echo "Building.."
