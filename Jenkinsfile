@@ -5,26 +5,23 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Building.."
-                sh '''
-                cd myapp
-                pip install -r requirements.txt
+                bat '''
+                echo "doing build stuff.."
                 '''
             }
         }
         stage('Test') {
             steps {
                 echo "Testing.."
-                sh '''
-                cd myapp
-                python3 hello.py
-                python3 hello.py --name=Brad
+                bat '''
+                echo "doing test stuff.."
                 '''
             }
         }
         stage('Deliver') {
             steps {
                 echo 'Deliver....'
-                sh '''
+                bat '''
                 echo "doing delivery stuff.."
                 '''
             }
