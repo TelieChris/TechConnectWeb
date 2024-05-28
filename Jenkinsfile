@@ -19,6 +19,7 @@ pipeline {
             steps {
                 echo 'executing yarn...'
                 node('main || Node_10') {
+                    bat "npm install -g yarn"
                     bat 'yarn install'
                 }
             }
