@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    environment {
+        PATH = "${env.PATH};C:\\Users\\User\\AppData\\Roaming\\npm\\yarn"
+        
+    }
 
     stages {
         stage('run frontend') {
