@@ -9,7 +9,7 @@ pipeline {
         stage('run frontend') {
             steps {
                 script {
-                    bat 'yarn --version'  // Verify Python installation
+                    bat 'yarn --version'  // Verify Yarn installation
                 }
             }
             steps {
