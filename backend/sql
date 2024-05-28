@@ -1,0 +1,92 @@
+-- DATABASE CALLED TechConnectDB
+CREATE DATABASE TechConnectDB;
+
+-- Users Table
+CREATE TABLE Users (
+    user_id INT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    role ENUM('student', 'faculty') NOT NULL,
+    profile_picture VARCHAR(255),
+    date_joined DATE NOT NULL
+);
+
+-- Courses Table
+CREATE TABLE Courses (
+    course_id INT PRIMARY KEY,
+    course_name VARCHAR(100) NOT NULL,
+    course_description TEXT,
+    course_code VARCHAR(20) NOT NULL,
+    faculty_id INT,
+    FOREIGN KEY (faculty_id) REFERENCES Users(user_id)
+);
+
+-- Assignments Table
+CREATE TABLE Assignments (
+    assignment_id INT PRIMARY KEY,
+    course_id INT,
+    title VARCHAR(100) NOT NULL,
+    description TEXT,
+    due_date DATE,
+    file_url VARCHAR(255),
+    FOREIGN KEY (course_id) REFERENCES Courses(course_id)
+);
+
+-- Submissions Table
+CREATE TABLE Submissions (
+    submission_id INT PRIMARY KEY,
+    assignment_id INT,
+    student_id INT,
+    submission_date DATE,
+    file_url VARCHAR(255),
+    grade FLOAT,
+    FOREIGN KEY (assignment_id) REFERENCES Assignments(assignment_id),
+    FOREIGN KEY (student_id) REFERENCES Users(user_id)
+);
+
+-- Forums Table
+CREATE TABLE Forums (
+    forum_id INT PRIMARY KEY,
+    course_id INT,
+    title VARCHAR(100) NOT NULL,
+    description TEXT,
+    created_by INT,
+    created_at DATETIME,
+    FOREIGN KEY (course_id) REFERENCES Courses(course_id),
+    FOREIGN KEY (created_by) REFERENCES Users(user_id)
+);
+
+-- Posts Table
+CREATE TABLE Posts (
+    post_id INT PRIMARY KEY,
+    forum_id INT,
+    user_id INT,
+    content TEXT,
+    created_at DATETIME,
+    FOREIGN KEY (forum_id) REFERENCES Forums(forum_id),
+    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+);
+
+-- Comments Table
+CREATE TABLE Comments (
+    comment_id INT PRIMARY KEY,
+    post_id INT,
+    user_id INT,
+    content TEXT,
+    created_at DATETIME,
+    FOREIGN KEY (post_id) REFERENCES Posts(post_id),
+    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+);
+
+-- News Table
+CREATE TABLE News (
+    news_id INT PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    content TEXT,
+    author_id INT,
+    published_at DATETIME,
+    FOREIGN KEY (author_id) REFERENCES Users(user_id)
+);
