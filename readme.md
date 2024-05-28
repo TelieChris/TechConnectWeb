@@ -1,7 +1,5 @@
-
-## YouTube Link
-For the full 1 hour course watch on youtube:
-https://www.youtube.com/watch?v=6YZvp2GwT0A
+# TechConnect
+TechConnect, as the website is called, will feature sections for course materials,  assignments, faculty information, student profiles, forums, and a news feed. It  will be developed using modern web technologies, ensuring responsiveness and  accessibility across devices. 
 
 # Installation
 ## Build the Jenkins BlueOcean Docker Image (or pull and use the one I built)
