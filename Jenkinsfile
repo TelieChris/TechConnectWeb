@@ -1,6 +1,6 @@
 pipeline {
     agent {
-    docker { image 'Node_10' }
+    docker { image 'docker' }
     }
     environment {
         PATH = "${env.PATH};C:/Users/User/AppData/Roaming/npm/yarn"
