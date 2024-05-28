@@ -11,7 +11,6 @@ pipeline {
                 script {
                     bat 'python --version'  // Verify Python installation
                     bat 'pip --version'     // Verify pip installation
-                    bat 'yarn --version'  // Verify Yarn installation
                 }
             }
         }
