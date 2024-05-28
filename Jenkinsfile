@@ -2,25 +2,22 @@ pipeline {
     agent any
 
     stages {
-        stage("run frontend") {
+        stage('run frontend') {
             steps {
                 echo 'executing yarn...'
                 node('Node-10.17') {
                     bat 'yarn install'
                 }
             }
-            stage('run backend'){
-                steps{
-                    echo 'executing gradle...'
-                    withGradle() {
-                        bat './gradlew -v'
-                    }
+        }
+        stage('run backend'){
+            steps{
+                echo 'executing gradle...'
+                withGradle() {
+                    bat './gradlew -v'
                 }
             }
         }
-    }
-    
-    stages {
         stage('Setup Python Environment') {
             steps {
                 script {
