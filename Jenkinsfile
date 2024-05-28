@@ -23,7 +23,7 @@ pipeline {
             steps {
                 echo "Testing.."
                 bat '''
-                cd myapp
+                cd backend
                 python hello.py
                 python hello.py --name=Brad
                 '''
