@@ -6,12 +6,16 @@ pipeline {
     }
 
     stages {
-        stage('run frontend') {
+        stage('Setup Python Environment') {
             steps {
                 script {
+                    bat 'python --version'  // Verify Python installation
+                    bat 'pip --version'     // Verify pip installation
                     bat 'yarn --version'  // Verify Yarn installation
                 }
             }
+        }
+        stage('run frontend') {
             steps {
                 echo 'executing yarn...'
                 node('main || Node_10') {
@@ -24,14 +28,6 @@ pipeline {
                 echo 'executing gradle...'
                 withGradle() {
                     bat './gradlew -v'
-                }
-            }
-        }
-        stage('Setup Python Environment') {
-            steps {
-                script {
-                    bat 'python --version'  // Verify Python installation
-                    bat 'pip --version'     // Verify pip installation
                 }
             }
         }
