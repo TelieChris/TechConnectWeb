@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+    docker { image 'Node_10' }
+    }
     environment {
         PATH = "${env.PATH};C:/Users/User/AppData/Roaming/npm/yarn"
         
@@ -17,10 +19,10 @@ pipeline {
         stage('run frontend') {
             steps {
                 echo 'executing yarn...'
-                node('main || Node_10') {
-                    bat "npm install -g yarn"
-                    bat 'yarn install'
-                }
+                
+                bat "npm install -g yarn"
+                bat 'yarn install'
+                
             }
         }
         stage('run backend'){
