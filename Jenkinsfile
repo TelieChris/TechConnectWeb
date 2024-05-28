@@ -8,6 +8,11 @@ pipeline {
     stages {
         stage('run frontend') {
             steps {
+                script {
+                    bat 'yarn --version'  // Verify Python installation
+                }
+            }
+            steps {
                 echo 'executing yarn...'
                 node('main || Node_10') {
                     bat 'yarn install'
