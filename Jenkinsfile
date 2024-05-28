@@ -5,7 +5,7 @@ pipeline {
         stage('run frontend') {
             steps {
                 echo 'executing yarn...'
-                node('Node-10.17') {
+                node('Node_10') {
                     bat 'yarn install'
                 }
             }
