@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        PATH = "${env.PATH};C:\\Users\\User\\AppData\\Roaming\\npm\\yarn"
+        PATH = "${env.PATH};C:\Users\User\AppData\Roaming\npm\yarn"
         
     }
 
