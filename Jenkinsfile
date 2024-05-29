@@ -1,6 +1,6 @@
 pipeline {
     agent {
-    docker { image 'docker' }
+    docker { image 'myjenkins-blueocean:2.414.2' }
     }
     environment {
         PATH = "${env.PATH};C:/Users/User/AppData/Roaming/npm/yarn"
