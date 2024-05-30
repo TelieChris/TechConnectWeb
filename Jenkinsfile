@@ -1,63 +1,76 @@
 pipeline {
-    agent {
-    docker { image 'myjenkins-blueocean:2.414.2' }
+    agent any
+
+    tools {
+        jdk 'jdk17'
+        maven 'Maven'
     }
+
     environment {
-        PATH = "${env.PATH};C:/Users/User/AppData/Roaming/npm/yarn"
-        
+        SCANNER_HOME = tool 'sonar-scanner'
+        DOCKER_HUB_CREDENTIALS = credentials('DockerHubCredentials')
     }
 
     stages {
-        stage('Setup Python Environment') {
+        stage('Git Checkout') {
+            steps {
+                git branch: 'main', 
+                    changelog: false, 
+                    credentialsId: '89d5394e-ea16-48ab-bbaa-e898817b1738', 
+                    poll: false, 
+                    url: 'https://github.com/TelieChris/TechConnectWeb.git'
+            }
+        }
+        stage('Compile') {
+            steps {
+                bat 'mvn clean compile'
+            }
+        }
+        stage('SonarQube Analysis') {
             steps {
                 script {
-                    bat 'python --version'  // Verify Python installation
-                    bat 'pip --version'     // Verify pip installation
+                    def scannerHome = tool name: 'sonar-scanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+                    bat """
+                    ${scannerHome}/bin/sonar-scanner \
+                        -Dsonar.host.url=http://127.0.0.1:9000/ \
+                        -Dsonar.login=squ_6537e0a318ecb2797da51d4a33cb976eaf7661b9 \
+                        -Dsonar.projectKey=techconnect \
+                        -Dsonar.projectName=techconnect \
+                        -Dsonar.java.binaries=.
+                    """
                 }
             }
         }
-        stage('run frontend') {
+        stage('OWASP SCAN') {
             steps {
-                echo 'executing yarn...'
-                
-                bat "npm install -g yarn"
-                bat 'yarn install'
-                
+                dependencyCheck additionalArguments: ' --scan ./', odcInstallation: 'DP'
+                dependencyCheckPublisher pattern: '**/depandency-check-report.xml'
             }
         }
-        stage('run backend'){
-            steps{
-                echo 'executing gradle...'
-                withGradle() {
-                    bat './gradlew -v'
+        stage('Build Application') {
+            steps {
+                bat "mvn clean install -DskipTests=true"
+                 }
+        }
+       stage('Build & Push Docker Image') {
+            steps {
+                script {
+                    withDockerRegistry(credentialsId: 'DockerHubCredentials', toolName: 'docker') {
+                        bat 'docker --version'  // Check Docker version to ensure it is installed
+                        bat 'docker build -t techconnect:latest -f Dockerfile .'
+                        bat 'docker tag techconnect:latest 50604/techconnect:latest'
+                        bat 'docker push 50604/techconnect:latest'
+                    }
                 }
             }
         }
-        stage('Build') {
+        stage('Docker Deploy To container') {
             steps {
-                echo "Building.."
-                bat '''
-                cd requirements
-                pip install -r requirements.txt
-                '''
-            }
-        }
-        stage('Test') {
-            steps {
-                echo "Testing.."
-                bat '''
-                cd backend
-                python hello.py
-                python hello.py --name=Brad
-                '''
-            }
-        }
-        stage('Deliver') {
-            steps {
-                echo 'Deliver....'
-                bat '''
-                echo "doing delivery stuff.."
-                '''
+                script {
+                    withDockerRegistry(credentialsId: 'DockerHubCredentials', toolName: 'docker') {
+                        bat "docker run -d --name techconnect -p 8070:8070 50604/techconnect:latest"
+                    }
+                }
             }
         }
     }
