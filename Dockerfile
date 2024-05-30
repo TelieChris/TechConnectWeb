@@ -1,4 +1,3 @@
-FROM openjdk:8
+FROM nginx:alpine
+COPY index.html /usr/share/nginx/html/
 EXPOSE 8070
-ADD target/techconnect_art_id-1.0-SNAPSHOT.jar techconnect_art_id-1.0-SNAPSHOT.jar
-ENTRYPOINT ["java","-jar","/techconnect_art_id-1.0-SNAPSHOT.jar"]
