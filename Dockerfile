@@ -2,7 +2,7 @@
 FROM nginx:latest
 
 # Expose port 82 for the web server
-EXPOSE 82
+EXPOSE 8082
 
 # Copy the index.html file to the Nginx HTML directory
 COPY index.html /usr/share/nginx/html/
