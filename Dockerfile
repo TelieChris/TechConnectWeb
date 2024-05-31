@@ -1,13 +1,12 @@
-# Use the official Nginx image from the Docker Hub
-FROM nginx:latest
-
-# Expose port 82 for the web server
-EXPOSE 8082
-
-# Copy the index.html file to the Nginx HTML directory
-COPY index.html /usr/share/nginx/html/
-
-# Copy the custom Nginx configuration file to the appropriate location
-COPY default.conf /etc/nginx/conf.d/
-
-# No need to set WORKDIR since Nginx is already configured to serve files from /usr/share/nginx/html
+FROM jenkins/jenkins:2.414.2-jdk11
+USER root
+RUN apt-get update && apt-get install -y lsb-release python3-pip
+RUN curl -fsSLo /usr/share/keyrings/docker-archive-keyring.asc \
+  https://download.docker.com/linux/debian/gpg
+RUN echo "deb [arch=$(dpkg --print-architecture) \
+  signed-by=/usr/share/keyrings/docker-archive-keyring.asc] \
+  https://download.docker.com/linux/debian \
+  $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
+RUN apt-get update && apt-get install -y docker-ce-cli
+USER jenkins
+RUN jenkins-plugin-cli --plugins "blueocean:1.25.3 docker-workflow:1.28"
