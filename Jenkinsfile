@@ -11,7 +11,7 @@ pipeline {
     }
     triggers {
         // cron('H */12 * * *') // This will schedule the build to run every 12 hours
-        cron('H/1 * * * *')
+        cron('H/5 * * * *')
     }
 
     stages {
