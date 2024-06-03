@@ -3,7 +3,6 @@ pipeline {
 
     tools {
         jdk 'jdk17'
-        maven 'Maven'
     }
 
     environment {
@@ -21,11 +20,7 @@ pipeline {
                     url: 'https://github.com/TelieChris/TechConnectWeb.git'
             }
         }
-        stage('Compile') {
-            steps {
-                bat 'mvn clean compile'
-            }
-        }
+        
         stage('SonarQube Analysis') {
             steps {
                 script {
@@ -47,12 +42,7 @@ pipeline {
                 dependencyCheckPublisher pattern: '**/depandency-check-report.xml'
             }
         }
-        stage('Build Application') {
-            steps {
-                bat "mvn clean install -DskipTests=true"
-                 }
-        }
-       stage('Build & Push Docker Image') {
+        stage('Build & Push Docker Image') {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'DockerHubCredentials', toolName: 'docker') {
