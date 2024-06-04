@@ -10,8 +10,8 @@ pipeline {
         DOCKER_HUB_CREDENTIALS = credentials('DockerCredentials')
     }
     triggers {
-        // cron('H */12 * * *') // This will schedule the build to run every 12 hours
-        cron('H/5 * * * *')
+         cron('H */12 * * *') // This will schedule the build to run every 12 hours
+       // cron('H/5 * * * *') // This will schedule the build to run every 5 minutes
     }
 
     stages {
