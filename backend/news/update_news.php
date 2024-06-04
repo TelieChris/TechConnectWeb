@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->close();
 } else {
     $news_id = $_GET['id'];
-    $sql = "SELECT * FROM News WHERE news_id=$news_id";
+    $sql = "SELECT * FROM news WHERE news_id=$news_id";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -29,26 +29,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update News</title>
-</head>
-<body>
-    <h2>Update News</h2>
-    <form method="post" action="">
-        <input type="hidden" id="news_id" name="news_id" value="<?php echo $row['news_id']; ?>">
-        <label for="title">Title:</label><br>
-        <input type="text" id="title" name="title" value="<?php echo $row['title']; ?>"><br>
-        <label for="content">Content:</label><br>
-        <textarea id="content" name="content"><?php echo $row['content']; ?></textarea><br>
-        <label for="author_id">Author ID:</label><br>
-        <input type="text" id="author_id" name="author_id" value="<?php echo $row['author_id']; ?>"><br>
-        <label for="published_at">Published At:</label><br>
-        <input type="datetime-local" id="published_at" name="published_at" value="<?php echo date('Y-m-d\TH:i', strtotime($row['published_at'])); ?>"><br><br>
-        <input type="submit" value="Update">
-    </form>
-</body>
-</html>

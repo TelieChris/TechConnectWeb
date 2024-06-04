@@ -3,7 +3,7 @@ include 'db.php';
 
 $news_id = $_GET['id'];
 
-$sql = "DELETE FROM News WHERE news_id=$news_id";
+$sql = "DELETE FROM news WHERE news_id=$news_id";
 
 if ($conn->query($sql) === TRUE) {
     echo "Record deleted successfully";
