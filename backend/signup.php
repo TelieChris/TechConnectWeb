@@ -1,5 +1,30 @@
 <?php
-include 'db_connect.php';
+$servername = "localhost"; // Replace with your database server details
+$username = "root"; // Replace with your database username
+$password = ""; // Replace with your database password
+$dbname = "techconnectdb";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+
+$servername = "localhost"; // Replace with your database server details
+$username = "root"; // Replace with your database username
+$password = ""; // Replace with your database password
+$dbname = "techconnectdb";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
@@ -19,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (move_uploaded_file($profile_picture['tmp_name'], $upload_file)) {
             $profile_picture_url = $upload_file;
         } else {
-            die("Error uploading the profile picture.");
+            die("Error uploading your profile picture.");
         }
     } else {
         $profile_picture_url = null; // Or set a default picture URL
@@ -45,4 +70,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->close();
     $conn->close();
 }
+
 ?>
+
