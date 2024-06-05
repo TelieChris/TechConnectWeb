@@ -16,6 +16,6 @@ if (isset($_GET['id'])) {
 
 $conn->close();
 
-header("Location: index.php");
+header("Location: dashIndex.php");
 exit();
 ?>
