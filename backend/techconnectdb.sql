@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.7
+-- version 5.0.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 04, 2024 at 09:12 PM
--- Server version: 10.1.30-MariaDB
--- PHP Version: 7.2.2
+-- Generation Time: Jun 05, 2024 at 11:22 AM
+-- Server version: 10.4.14-MariaDB
+-- PHP Version: 7.4.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -32,7 +31,7 @@ CREATE TABLE `assignments` (
   `assignment_id` int(11) NOT NULL,
   `course_id` int(11) DEFAULT NULL,
   `title` varchar(100) NOT NULL,
-  `description` text,
+  `description` text DEFAULT NULL,
   `due_date` date DEFAULT NULL,
   `file_url` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -54,7 +53,7 @@ CREATE TABLE `comments` (
   `comment_id` int(11) NOT NULL,
   `post_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `content` text,
+  `content` text DEFAULT NULL,
   `created_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -74,7 +73,7 @@ INSERT INTO `comments` (`comment_id`, `post_id`, `user_id`, `content`, `created_
 CREATE TABLE `courses` (
   `course_id` int(11) NOT NULL,
   `course_name` varchar(100) NOT NULL,
-  `course_description` text,
+  `course_description` text DEFAULT NULL,
   `course_code` varchar(20) NOT NULL,
   `faculty_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -114,7 +113,7 @@ CREATE TABLE `forums` (
   `forum_id` int(11) NOT NULL,
   `course_id` int(11) DEFAULT NULL,
   `title` varchar(100) NOT NULL,
-  `description` text,
+  `description` text DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -135,7 +134,7 @@ INSERT INTO `forums` (`forum_id`, `course_id`, `title`, `description`, `created_
 CREATE TABLE `news` (
   `news_id` int(11) NOT NULL,
   `title` varchar(100) NOT NULL,
-  `content` text,
+  `content` text DEFAULT NULL,
   `author_id` int(11) DEFAULT NULL,
   `published_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -157,7 +156,7 @@ CREATE TABLE `posts` (
   `post_id` int(11) NOT NULL,
   `forum_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `content` text,
+  `content` text DEFAULT NULL,
   `created_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -167,6 +166,23 @@ CREATE TABLE `posts` (
 
 INSERT INTO `posts` (`post_id`, `forum_id`, `user_id`, `content`, `created_at`) VALUES
 (1, 1, 1, 'dsahsajsajsajsajd', '2024-06-04 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `signup`
+--
+
+CREATE TABLE `signup` (
+  `username` text NOT NULL,
+  `password` text NOT NULL,
+  `email` text NOT NULL,
+  `firstname` text NOT NULL,
+  `lastname` text NOT NULL,
+  `role` text NOT NULL,
+  `profile_picture_url` text NOT NULL,
+  `date_joined` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
