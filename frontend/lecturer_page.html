@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecturer Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            margin: 0;
+            background-color: #f0f4f8;
+            color: #333;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .sidebar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 250px;
+            background-color: #1a2b4e;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 14px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            z-index: 2;
+            height: calc(100% - 100px); /* Adjusted height to accommodate for the footer */
+            margin-bottom: 20px; /* Added margin between sidebar and footer */
+        }
+        .sidebar img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            margin-bottom: 10px;
+            border: 2px solid white;
+        }
+        .sidebar h2 {
+            margin: 0;
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            margin: 10px 0;
+            display: block;
+            padding: 6px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .sidebar a:hover {
+            background-color: #2a3b5e;
+        }
+        .main-content {
+            margin-left: 270px;
+            padding: 20px;
+            background-color: #ffffff;
+            overflow-y: auto;
+            width: calc(100% - 270px);
+            flex: 1; /* This will make the main content area grow to fill the available space */
+            overflow-y: auto;
+            margin-bottom: 50px;
+        }
+        .content-section {
+            display: none; /* Hide all sections by default */
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+        .content-section.active {
+            display: block; /* Show active section */
+        }
+        .content-section h3 {
+            background-color: #1a2b4e;
+            color: white;
+            padding: 10px;
+            border-radius: 5px 5px 0 0;
+            margin: -20px -20px 20px;
+        }
+        .content-section table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        .content-section table, .content-section th, .content-section td {
+            border: 1px solid #ddd;
+        }
+        .content-section th, .content-section td {
+            padding: 12px;
+            text-align: left;
+            font-size: 0.9em;
+        }
+        .content-section th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .content-section tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .content-section form {
+            display: flex;
+            flex-direction: column;
+        }
+        .content-section form label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .content-section form input[type="text"],
+        .content-section form input[type="date"],
+        .content-section form input[type="number"],
+        .content-section form select,
+        .content-section form textarea,
+        .content-section form input[type="file"] {
+            margin-bottom: 15px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .content-section form input[type="submit"] {
+            background-color: #1a2b4e;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .content-section form input[type="submit"]:hover {
+            background-color: #2a3b5e;
+        }
+        .content-section .actions {
+            display: flex;
+            gap: 10px;
+        }
+        .content-section .actions button {
+            padding: 8px 15px;
+            cursor: pointer;
+            font-size: 0.9em;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .content-section .actions .save {
+            background-color: #28a745;
+            color: white;
+        }
+        .content-section .actions .save:hover {
+            background-color: #218838;
+        }
+        .footer {
+            background-color: #1a2b4e;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            margin-top: 20px; /* Added margin to create space between footer and sidebar */
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <img src="profile.jpg" alt="Lecturer Profile">
+        <h2>Hi, Lecturer</h2>
+        <a href="#home" onclick="showSection('home')">Home</a>
+        <a href="#my-courses" onclick="showSection('my-courses')">My Courses</a>
+        <a href="#students" onclick="showSection('students')">Students</a>
+        <a href="#assignments" onclick="showSection('assignments')">Assignments</a>
+        <a href="#publish-assignment" onclick="showSection('publish-assignment')">Publish Assignment</a>
+        <a href="#submitted-assignments" onclick="showSection('submitted-assignments')">Submitted Assignments</a>
+        <a href="#published-assignments" onclick="showSection('published-assignments')">Published Assignments</a>
+        <a href="#time-table" onclick="showSection('time-table')">Time Table</a>
+        <a href="#forum" onclick="showSection('forum')">Forum</a>
+        <a href="#news" onclick="showSection('news')">News</a>
+        <a href="#settings" onclick="showSection('settings')">Settings</a>
+        <a href="#logout">Logout</a>
+    </div>
+    <div class="main-content">
+        <div id="home" class="content-section active">
+            <h3>Welcome to Your Dashboard</h3>
+            <p>Here you can manage your courses, assignments, and students efficiently.</p>
+        </div>
+        <div id="my-courses" class="content-section">
+            <h3>My Courses</h3>
+            <table>
+                <tr>
+                    <th>Course ID</th>
+                    <th>Course Name</th>
+                    <th>Description</th>
+                    <th>Semester</th>
+                    <th>Status</th>
+                </tr>
+                <tr>
+                    <td>ICT101</td>
+                    <td>Introduction to Professional Development</td>
+                    <td>Basics of professional skills and development</td>
+                    <td>1</td>
+                    <td>Ongoing</td>
+                </tr>
+                <tr>
+                    <td>ICT102</td>
+                    <td>Introduction to Machine Learning</td>
+                    <td>Basics of machine learning and AI</td>
+                    <td>1</td>
+                    <td>Ongoing</td>
+                </tr>
+                <tr>
+                    <td>ICT103</td>
+                    <td>Computational Methods</td>
+                    <td>Fundamentals of computational techniques</td>
+                    <td>1</td>
+                    <td>Ongoing</td>
+                </tr>
+                <tr>
+                    <td>ICT104</td>
+                    <td>Development Operations</td>
+                    <td>Introduction to DevOps practices</td>
+                    <td>2</td>
+                    <td>Ongoing</td>
+                </tr>
+            </table>
+        </div>
+        <div id="students" class="content-section">
+            <h3>Students</h3>
+            <table>
+                <tr>
+                    <th>Student ID</th>
+                    <th>Student Name</th>
+                    <th>Course</th>
+                    <th>Status</th>
+                </tr>
+                <tr>
+                    <td>23RP00761</td>
+                    <td>NIYOMUNGERI Enock</td>
+                    <td>Introduction to Machine Learning</td>
+                    <td>Enrolled</td>
+                </tr>
+                <tr>
+                    <td>23RP00762</td>
+                    <td>Uwimana Jeanette</td>
+                    <td>Introduction to Machine Learning</td>
+                    <td>Enrolled</td>
+                </tr>
+            </table>
+        </div>
+        <div id="assignments" class="content-section">
+            <h3>Assignments</h3>
+            <p>Manage and review assignments here.</p>
+        </div>
+        <div id="publish-assignment" class="content-section">
+            <h3>Publish Assignment</h3>
+            <form>
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
+                
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" rows="4" required></textarea>
+                
+                <label for="deadline">Deadline:</label>
+                <input type="date" id="deadline" name="deadline" required>
+                
+                <label for="course">Course:</label>
+                <select id="course" name="course" required>
+                    <option value="machine-learning">Machine Learning</option>
+                    <option value="pw-management">PW Management</option>
+                </select>
+                
+                <label for="max-marks">Maximum Marks:</label>
+                <input type="number" id="max-marks" name="max-marks" required>
+                
+                <label for="file">Upload Assignment File:</label>
+                <input type="file" id="file" name="file">
+                
+                <input type="submit" value="Publish">
+            </form>
+        </div>
+        <div id="submitted-assignments" class="content-section">
+            <h3>Submitted Assignments</h3>
+            <table>
+                <tr>
+                    <th>Student ID</th>
+                    <th>Student Name</th>
+                    <th>Assignment Title</th>
+                    <th>Submission Date</th>
+                    <th>PDF Answer</th>
+                    <th>Grade</th>
+                    <th>Max Marks</th>
+                    <th>Actions</th>
+                </tr>
+                <tr>
+                    <td>23RP00761</td>
+                    <td>Yvan Cebastian</td>
+                    <td>Assignment 1</td>
+                    <td>2024-06-01</td>
+                    <td><a href="assignment1.pdf" target="_blank">View PDF</a></td>
+                    <td><input type="text" name="grade"></td>
+                    <td>100</td>
+                    <td class="actions">
+                        <button class="save">Save Grade</button>
+                         <button class="save">Edit Grade</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>23RP00762</td>
+                    <td>Uwimana Jeanette</td>
+                    <td>Assignment 2</td>
+                    <td>2024-06-02</td>
+                    <td><a href="assignment2.pdf" target="_blank">View PDF</a></td>
+                    <td><input type="text" name="grade"></td>
+                    <td>100</td>
+                    <td class="actions">
+                        <button class="save">Save Grade</button>
+                        <button class="save">Edit Grade</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="published-assignments" class="content-section">
+            <h3>View Published Assignments</h3>
+            <table>
+                <tr>
+                    <th>Assignment ID</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Uploaded file</th>
+                    <th>Deadline</th>
+                    <th>Course</th>
+                    <th>Max Marks</th>
+                    <th>Actions</th>
+                </tr>
+                <tr>
+                      <td>1</td>
+                    <td>Assignment1</td>
+                    <td>TechConnect: Bridging Knowledge, Building Tomorrow</td>
+                    <td><a href="assignment1.pdf" target="_blank">View File</a></td>
+                    <td>2024-07-15</td>
+                    <td>Development Operations</td>
+                    <td>30</td>
+                    <td class="actions">
+                        <button class="edit" style="color: white; background-color: blue;">Edit</button>
+
+                        <button class="delete" style="color: white; background-color: Red;">Delete</button>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Assignment 2</td>
+                    <td>Best Practice for Cybersecurity</td>
+                    <td><a href="assignment1.pdf" target="_blank">View File</a></td>
+                    <td>2024-07-15</td>
+                    <td>Cybersecurity</td>
+                    <td>10</td>
+                    <td class="actions">
+                        <button class="edit" style="color: white; background-color: blue;">Edit</button>
+
+                        <button class="delete" style="color: white; background-color: Red;">Delete</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="time-table" class="content-section">
+            <h3>Time Table</h3>
+            <p>Here you can manage your timetable.</p>
+        </div>
+        <div id="forum" class="content-section">
+            <h3>Forum</h3>
+            <p>Participate in course discussions and forums here.</p>
+        </div>
+        <div id="news" class="content-section">
+            <h3>News</h3>
+            <p>Stay updated with the latest news and announcements.</p>
+        </div>
+        <div id="settings" class="content-section">
+            <h3>Settings</h3>
+            <p>Manage your account settings here.</p>
+        </div>
+    </div>
+    <div class="footer">
+        <p>© 2024 TechConnect. All rights reserved.</p>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+    </script>
+</body>
+</html>
