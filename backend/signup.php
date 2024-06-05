@@ -1,4 +1,7 @@
 <?php
+include 'db_connect.php';
+
+
 $servername = "localhost"; // Replace with your database server details
 $username = "root"; // Replace with your database username
 $password = ""; // Replace with your database password
@@ -11,6 +14,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Encrypt the password
@@ -55,4 +59,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->close();
     $conn->close();
 }
+
 ?>
+
