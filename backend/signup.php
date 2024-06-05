@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (move_uploaded_file($profile_picture['tmp_name'], $upload_file)) {
             $profile_picture_url = $upload_file;
         } else {
-            die("Error uploading the profile picture.");
+            die("Error uploading your profile picture.");
         }
     } else {
         $profile_picture_url = null; // Or set a default picture URL
