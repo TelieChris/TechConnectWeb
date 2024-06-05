@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "TechConnectDB";
+$dbname = "techconnectdb";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
