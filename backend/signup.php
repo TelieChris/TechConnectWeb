@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Insert data into the database
-    $sql = "INSERT INTO signup (username, password, email, firstname, lastname, role, profile_picture_url, date_joined)
+    $sql = "INSERT INTO users (username, password, email, firstname, lastname, role, profile_picture_url, date_joined)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = $conn->prepare($sql);
