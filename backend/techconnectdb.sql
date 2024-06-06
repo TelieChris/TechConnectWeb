@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 05, 2024 at 11:22 AM
+-- Generation Time: Jun 06, 2024 at 09:26 AM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -166,23 +166,6 @@ CREATE TABLE `posts` (
 
 INSERT INTO `posts` (`post_id`, `forum_id`, `user_id`, `content`, `created_at`) VALUES
 (1, 1, 1, 'dsahsajsajsajsajd', '2024-06-04 00:00:00');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `signup`
---
-
-CREATE TABLE `signup` (
-  `username` text NOT NULL,
-  `password` text NOT NULL,
-  `email` text NOT NULL,
-  `firstname` text NOT NULL,
-  `lastname` text NOT NULL,
-  `role` text NOT NULL,
-  `profile_picture_url` text NOT NULL,
-  `date_joined` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
