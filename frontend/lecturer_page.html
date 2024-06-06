@@ -54,6 +54,20 @@
         .sidebar a:hover {
             background-color: #2a3b5e;
         }
+        .sidebar .dropdown-btn {
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .dropdown-container {
+            display: none;
+            flex-direction: column;
+            padding-left: 20px;
+        }
+        .dropdown-container a {
+            margin: 5px 0;
+        }
         .main-content {
             margin-left: 270px;
             padding: 20px;
@@ -173,11 +187,13 @@
         <h2>Hi, Lecturer</h2>
         <a href="#home" onclick="showSection('home')">Home</a>
         <a href="#my-courses" onclick="showSection('my-courses')">My Courses</a>
+        <a class="dropdown-btn" onclick="toggleDropdown()">Assignments &#9660;</a>
+        <div class="dropdown-container">
+            <a href="#publish-assignment" onclick="showSection('publish-assignment')">Publish Assignment</a>
+            <a href="#submitted-assignments" onclick="showSection('submitted-assignments')">Submitted Assignments</a>
+            <a href="#published-assignments" onclick="showSection('published-assignments')">Published Assignments</a>
+        </div>
         <a href="#students" onclick="showSection('students')">Students</a>
-        <a href="#assignments" onclick="showSection('assignments')">Assignments</a>
-        <a href="#publish-assignment" onclick="showSection('publish-assignment')">Publish Assignment</a>
-        <a href="#submitted-assignments" onclick="showSection('submitted-assignments')">Submitted Assignments</a>
-        <a href="#published-assignments" onclick="showSection('published-assignments')">Published Assignments</a>
         <a href="#time-table" onclick="showSection('time-table')">Time Table</a>
         <a href="#forum" onclick="showSection('forum')">Forum</a>
         <a href="#news" onclick="showSection('news')">News</a>
@@ -224,8 +240,99 @@
                     <td>ICT104</td>
                     <td>Development Operations</td>
                     <td>Introduction to DevOps practices</td>
-                    <td>2</td>
+                    <td>1</td>
                     <td>Ongoing</td>
+                </tr>
+                <tr>
+                    <td>ICT105</td>
+                    <td>Mobile and Cloud Software Development</td>
+                    <td>Creating applications for mobile and cloud</td>
+                    <td>1</td>
+                    <td>Ongoing</td>
+                </tr>
+            </table>
+        </div>
+        <div id="publish-assignment" class="content-section">
+            <h3>Publish Assignment</h3>
+            <form>
+                <label for="course">Select Course:</label>
+                <select id="course" name="course">
+                    <option value="ict101">Introduction to Professional Development</option>
+                    <option value="ict102">Introduction to Machine Learning</option>
+                    <option value="ict103">Computational Methods</option>
+                    <option value="ict104">Development Operations</option>
+                    <option value="ict105">Mobile and Cloud Software Development</option>
+                </select>
+                <label for="title">Assignment Title:</label>
+                <input type="text" id="title" name="title" required>
+                <label for="description">Assignment Description:</label>
+                <textarea id="description" name="description" required></textarea>
+                <label for="due-date">Due Date:</label>
+                <input type="date" id="due-date" name="due-date" required>
+                <label for="points">Points:</label>
+                <input type="number" id="points" name="points" required>
+                <input type="submit" value="Publish">
+            </form>
+        </div>
+        <div id="submitted-assignments" class="content-section">
+            <h3>Submitted Assignments</h3>
+            <table>
+                <tr>
+                    <th>Assignment Title</th>
+                    <th>Student Name</th>
+                    <th>Submitted Date</th>
+                    <th>Grade</th>
+                    <th>Action</th>
+                </tr>
+                <tr>
+                    <td>Assignment 1</td>
+                    <td>John Doe</td>
+                    <td>2023-01-15</td>
+                    <td>A</td>
+                    <td><button>View</button></td>
+                </tr>
+                <tr>
+                    <td>Assignment 2</td>
+                    <td>Jane Smith</td>
+                    <td>2023-01-20</td>
+                    <td>B+</td>
+                    <td><button>View</button></td>
+                </tr>
+                <tr>
+                    <td>Assignment 3</td>
+                    <td>Sam Brown</td>
+                    <td>2023-01-22</td>
+                    <td>A-</td>
+                    <td><button>View</button></td>
+                </tr>
+            </table>
+        </div>
+        <div id="published-assignments" class="content-section">
+            <h3>Published Assignments</h3>
+            <table>
+                <tr>
+                    <th>Assignment Title</th>
+                    <th>Course</th>
+                    <th>Published Date</th>
+                    <th>Due Date</th>
+                </tr>
+                <tr>
+                    <td>Assignment 1</td>
+                    <td>Introduction to Professional Development</td>
+                    <td>2023-01-10</td>
+                    <td>2023-01-25</td>
+                </tr>
+                <tr>
+                    <td>Assignment 2</td>
+                    <td>Introduction to Machine Learning</td>
+                    <td>2023-02-01</td>
+                    <td>2023-02-15</td>
+                </tr>
+                <tr>
+                    <td>Assignment 3</td>
+                    <td>Computational Methods</td>
+                    <td>2023-02-15</td>
+                    <td>2023-03-01</td>
                 </tr>
             </table>
         </div>
@@ -235,150 +342,67 @@
                 <tr>
                     <th>Student ID</th>
                     <th>Student Name</th>
-                    <th>Course</th>
-                    <th>Status</th>
+                    <th>Email</th>
+                    <th>Enrolled Course</th>
                 </tr>
                 <tr>
-                    <td>23RP00761</td>
-                    <td>NIYOMUNGERI Enock</td>
-                    <td>Introduction to Machine Learning</td>
-                    <td>Enrolled</td>
+                    <td>2023101</td>
+                    <td>John Doe</td>
+                    <td>john.doe@example.com</td>
+                    <td>ICT101</td>
                 </tr>
                 <tr>
-                    <td>23RP00762</td>
-                    <td>Uwimana Jeanette</td>
-                    <td>Introduction to Machine Learning</td>
-                    <td>Enrolled</td>
-                </tr>
-            </table>
-        </div>
-        <div id="assignments" class="content-section">
-            <h3>Assignments</h3>
-            <p>Manage and review assignments here.</p>
-        </div>
-        <div id="publish-assignment" class="content-section">
-            <h3>Publish Assignment</h3>
-            <form>
-                <label for="title">Title:</label>
-                <input type="text" id="title" name="title" required>
-                
-                <label for="description">Description:</label>
-                <textarea id="description" name="description" rows="4" required></textarea>
-                
-                <label for="deadline">Deadline:</label>
-                <input type="date" id="deadline" name="deadline" required>
-                
-                <label for="course">Course:</label>
-                <select id="course" name="course" required>
-                    <option value="machine-learning">Machine Learning</option>
-                    <option value="pw-management">PW Management</option>
-                </select>
-                
-                <label for="max-marks">Maximum Marks:</label>
-                <input type="number" id="max-marks" name="max-marks" required>
-                
-                <label for="file">Upload Assignment File:</label>
-                <input type="file" id="file" name="file">
-                
-                <input type="submit" value="Publish">
-            </form>
-        </div>
-        <div id="submitted-assignments" class="content-section">
-            <h3>Submitted Assignments</h3>
-            <table>
-                <tr>
-                    <th>Student ID</th>
-                    <th>Student Name</th>
-                    <th>Assignment Title</th>
-                    <th>Submission Date</th>
-                    <th>PDF Answer</th>
-                    <th>Grade</th>
-                    <th>Max Marks</th>
-                    <th>Actions</th>
+                    <td>2023102</td>
+                    <td>Jane Smith</td>
+                    <td>jane.smith@example.com</td>
+                    <td>ICT102</td>
                 </tr>
                 <tr>
-                    <td>23RP00761</td>
-                    <td>Yvan Cebastian</td>
-                    <td>Assignment 1</td>
-                    <td>2024-06-01</td>
-                    <td><a href="assignment1.pdf" target="_blank">View PDF</a></td>
-                    <td><input type="text" name="grade"></td>
-                    <td>100</td>
-                    <td class="actions">
-                        <button class="save">Save Grade</button>
-                         <button class="save">Edit Grade</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>23RP00762</td>
-                    <td>Uwimana Jeanette</td>
-                    <td>Assignment 2</td>
-                    <td>2024-06-02</td>
-                    <td><a href="assignment2.pdf" target="_blank">View PDF</a></td>
-                    <td><input type="text" name="grade"></td>
-                    <td>100</td>
-                    <td class="actions">
-                        <button class="save">Save Grade</button>
-                        <button class="save">Edit Grade</button>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div id="published-assignments" class="content-section">
-            <h3>View Published Assignments</h3>
-            <table>
-                <tr>
-                    <th>Assignment ID</th>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Uploaded file</th>
-                    <th>Deadline</th>
-                    <th>Course</th>
-                    <th>Max Marks</th>
-                    <th>Actions</th>
-                </tr>
-                <tr>
-                      <td>1</td>
-                    <td>Assignment1</td>
-                    <td>TechConnect: Bridging Knowledge, Building Tomorrow</td>
-                    <td><a href="assignment1.pdf" target="_blank">View File</a></td>
-                    <td>2024-07-15</td>
-                    <td>Development Operations</td>
-                    <td>30</td>
-                    <td class="actions">
-                        <button class="edit" style="color: white; background-color: blue;">Edit</button>
-
-                        <button class="delete" style="color: white; background-color: Red;">Delete</button>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Assignment 2</td>
-                    <td>Best Practice for Cybersecurity</td>
-                    <td><a href="assignment1.pdf" target="_blank">View File</a></td>
-                    <td>2024-07-15</td>
-                    <td>Cybersecurity</td>
-                    <td>10</td>
-                    <td class="actions">
-                        <button class="edit" style="color: white; background-color: blue;">Edit</button>
-
-                        <button class="delete" style="color: white; background-color: Red;">Delete</button>
-                    </td>
+                    <td>2023103</td>
+                    <td>Sam Brown</td>
+                    <td>sam.brown@example.com</td>
+                    <td>ICT103</td>
                 </tr>
             </table>
         </div>
         <div id="time-table" class="content-section">
             <h3>Time Table</h3>
-            <p>Here you can manage your timetable.</p>
+            <table>
+                <tr>
+                    <th>Course</th>
+                    <th>Day</th>
+                    <th>Time</th>
+                    <th>Venue</th>
+                </tr>
+                <tr>
+                    <td>ICT101</td>
+                    <td>Monday</td>
+                    <td>09:00 - 11:00</td>
+                    <td>Room A</td>
+                </tr>
+                <tr>
+                    <td>ICT102</td>
+                    <td>Wednesday</td>
+                    <td>11:00 - 13:00</td>
+                    <td>Room B</td>
+                </tr>
+                <tr>
+                    <td>ICT103</td>
+                    <td>Friday</td>
+                    <td>14:00 - 16:00</td>
+                    <td>Room C</td>
+                </tr>
+            </table>
         </div>
         <div id="forum" class="content-section">
             <h3>Forum</h3>
-            <p>Participate in course discussions and forums here.</p>
+            <p>Welcome to the discussion forum. Here you can interact with your students and discuss course-related topics.</p>
+            <textarea rows="10" cols="50" placeholder="Start a new discussion..."></textarea>
+            <button>Post</button>
         </div>
         <div id="news" class="content-section">
             <h3>News</h3>
-            <p>Stay updated with the latest news and announcements.</p>
+            <p>Latest updates and news will be displayed here.</p>
         </div>
         <div id="settings" class="content-section">
             <h3>Settings</h3>
@@ -386,16 +410,22 @@
         </div>
     </div>
     <div class="footer">
-        <p>© 2024 TechConnect. All rights reserved.</p>
+        <p>&copy; 2023 Lecturer Dashboard. All rights reserved.</p>
     </div>
-
     <script>
         function showSection(sectionId) {
             const sections = document.querySelectorAll('.content-section');
             sections.forEach(section => {
                 section.classList.remove('active');
+                if (section.id === sectionId) {
+                    section.classList.add('active');
+                }
             });
-            document.getElementById(sectionId).classList.add('active');
+        }
+
+        function toggleDropdown() {
+            const dropdownContainer = document.querySelector('.dropdown-container');
+            dropdownContainer.style.display = dropdownContainer.style.display === 'block' ? 'none' : 'block';
         }
     </script>
 </body>
