@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.7
+-- version 5.0.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 09, 2024 at 11:27 AM
--- Server version: 10.1.30-MariaDB
--- PHP Version: 7.2.2
+-- Generation Time: Jun 09, 2024 at 08:44 PM
+-- Server version: 10.4.14-MariaDB
+-- PHP Version: 7.4.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -32,7 +31,7 @@ CREATE TABLE `assignments` (
   `assignment_id` int(11) NOT NULL,
   `course_id` int(11) DEFAULT NULL,
   `title` varchar(100) NOT NULL,
-  `description` text,
+  `description` text DEFAULT NULL,
   `due_date` date DEFAULT NULL,
   `file_url` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -58,7 +57,7 @@ CREATE TABLE `comments` (
   `comment_id` int(11) NOT NULL,
   `post_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `content` text,
+  `content` text DEFAULT NULL,
   `created_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -71,7 +70,7 @@ CREATE TABLE `comments` (
 CREATE TABLE `courses` (
   `course_id` int(11) NOT NULL,
   `course_name` varchar(100) NOT NULL,
-  `course_description` text,
+  `course_description` text DEFAULT NULL,
   `course_code` varchar(20) NOT NULL,
   `faculty_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -111,7 +110,7 @@ CREATE TABLE `forums` (
   `forum_id` int(11) NOT NULL,
   `course_id` int(11) DEFAULT NULL,
   `title` varchar(100) NOT NULL,
-  `description` text,
+  `description` text DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -132,7 +131,7 @@ INSERT INTO `forums` (`forum_id`, `course_id`, `title`, `description`, `created_
 CREATE TABLE `news` (
   `news_id` int(11) NOT NULL,
   `title` varchar(100) NOT NULL,
-  `content` text,
+  `content` text DEFAULT NULL,
   `author_id` int(11) DEFAULT NULL,
   `published_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -154,7 +153,7 @@ CREATE TABLE `posts` (
   `post_id` int(11) NOT NULL,
   `forum_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `content` text,
+  `content` text DEFAULT NULL,
   `created_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -211,15 +210,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `username`, `password_hash`, `email`, `first_name`, `last_name`, `role`, `profile_picture`, `date_joined`) VALUES
-(1, 'IRAHARI', '81dc9bdb52d04dc20036dbd8313ed055', 'sosoweb777@gmail.com', 'Soso', 'IRAHARI', 'student', NULL, '2024-06-04'),
-(2, 'Solange', '827ccb0eea8a706c4c34a16891f84e7b', 'sosomutware@gmail.com', 'Solange', 'NYIRASAMAZA', 'student', '', '2024-06-05'),
-(3, 'Solange', '827ccb0eea8a706c4c34a16891f84e7b', 'sosomutware@gmail.com', 'Solange', 'NYIRASAMAZA', 'student', '', '2024-06-05'),
-(4, 'Solange', '827ccb0eea8a706c4c34a16891f84e7b', 'sosomutware@gmail.com', 'Solange', 'NYIRASAMAZA', 'student', '', '2024-06-05'),
-(5, 'Solange', '827ccb0eea8a706c4c34a16891f84e7b', 'sosomutware@gmail.com', 'Solange', 'NYIRASAMAZA', 'student', '', '2024-06-05'),
-(6, 'Solange', '827ccb0eea8a706c4c34a16891f84e7b', 'sosomutware@gmail.com', 'Solange', 'NYIRASAMAZA', 'student', '', '2024-06-05'),
-(7, 'Solange', '827ccb0eea8a706c4c34a16891f84e7b', 'sosomutware@gmail.com', 'Solange', 'NYIRASAMAZA', 'student', '', '2024-06-05'),
-(8, 'Solange', '827ccb0eea8a706c4c34a16891f84e7b', 'sosomutware@gmail.com', 'Solange', 'NYIRASAMAZA', 'student', '', '2024-06-05'),
-(9, 'Solange', '827ccb0eea8a706c4c34a16891f84e7b', 'sosomutware@gmail.com', 'Solange', 'NYIRASAMAZA', 'student', '', '2024-06-05');
+(10, 'bughi123', '$2y$10$pH1eI3YkDjGPoXhVTbXNTOSN8y8/ekyMGb.qiaASQ//qMrG9mVa2W', 'bugiruwendaj@gmail.com', 'Jean Bosco', 'BUGHI', 'student', 'uploads/Screenshot (6).png', '2024-06-09'),
+(11, 'bughi123', '$2y$10$iVVhGfV7z0IPTAKyvmKl6ukCcjq.z3gev9vf/Ew34hM6smLeAz3P.', 'bugiruwendaj@gmail.com', 'Jean Bosco', 'BUGHI', 'student', 'uploads/Screenshot 2023-11-10 161049.png', '2024-06-09'),
+(12, 'bughi123', '$2y$10$tXRu9rvuzIfvWqO26jpq8.6uPIgoss37z.v7RMf5Wptgc3WfW1E.G', 'bugiruwendaj@gmail.com', 'Jean Bosco', 'BUGHI', 'student', 'uploads/Screenshot 2023-1.png', '2024-06-09'),
+(13, 'bughi123', '$2y$10$RNbOW9.wxHZ793T.wKStEuzmcx7SpCBSXhFKZDQ8igM1/0rOTaR4.', 'bugiruwendaj@gmail.com', 'Jean Bosco', 'BUGHI', 'student', 'uploads/13.png', '2024-06-09'),
+(14, 'bughi123', '$2y$10$sspkIO65uNlKhsth5bnTKu15aRCZWXO5OZroQEpdJUQVaDaW618Me', 'bugiruwendaj@gmail.com', 'Jean Bosco', 'BUGHI', 'student', 'uploads/12.png', '2024-06-09'),
+(15, 'bughi123', '$2y$10$XVmHwrEuzS94tj29r3IGvuqemYv6HQn.vWWKQiZVNLAjUTHUOEaEK', 'bugiruwendaj@gmail.com', 'Jean Bosco', 'BUGHI', 'student', 'uploads/11.png', '2024-06-09');
 
 --
 -- Indexes for dumped tables
@@ -340,7 +336,7 @@ ALTER TABLE `submissions`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
