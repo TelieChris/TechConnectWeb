@@ -28,19 +28,18 @@ $sql = "SELECT * FROM courses LIMIT $start_from, $results_per_page";
 $result = $conn->query($sql);
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Course</title>
+    <title>Courses</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<div class="container mt-5">
-        <h2 class="alert alert-primary p-3 text-center">courses</h2>
-        <a href="create_course.php" class="btn btn-primary mb-3">Create News course</a>
+    <div class="container mt-5">
+        <h2 class="alert alert-primary p-3 text-center">Courses Views</h2>
+        <a href="insert_course.php" class="btn btn-primary mb-3">Create New Course</a>
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -49,7 +48,7 @@ $result = $conn->query($sql);
                     <th>Course Description</th>
                     <th>Course Code</th>
                     <th>Faculty</th>
-                    <th>Status</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -59,37 +58,34 @@ $result = $conn->query($sql);
                     while($row = $result->fetch_assoc()) {
                         echo "<tr>
                             <td>$i12</td>
-
                             <td>{$row['course_name']}</td>
                             <td>{$row['course_description']}</td>
                             <td>{$row['course_code']}</td>
                             <td>{$row['faculty_id']}</td>
                             <td>
-                                <a href='update_news.php?id={$row['course_id']}' class='btn btn-warning'>Edit</a>
-                                <a href='delete_news.php?id={$row['course_id']}' class='btn btn-danger'>Delete</a>
+                                <a href='update_course.php?course_id={$row['course_id']}' class='btn btn-warning'>Edit</a>
+                                <a href='delete_course.php?course_id={$row['course_id']}' class='btn btn-danger'>Delete</a>
                             </td>
                         </tr>";
                         $i12++;
                     }
                 } else {
-                    echo "<tr><td colspan='6'>No articles found</td></tr>";
+                    echo "<tr><td colspan='6'>No courses found</td></tr>";
                 }
                 ?>
             </tbody>
         </table>
         <div class="d-flex justify-content-between">
             <?php if ($page > 1): ?>
-                <a href="create_course.php?page=<?php echo $page-1; ?>" class="btn btn-secondary">Previous</a>
+                <a href="view_courses.php?page=<?php echo $page-1; ?>" class="btn btn-secondary">Previous</a>
             <?php endif; ?>
             <?php if ($page < $total_pages): ?>
-                <a href="create_course.php?page=<?php echo $page+1; ?>" class="btn btn-secondary ml-auto">Next</a>
+                <a href="view_courses.php?page=<?php echo $page+1; ?>" class="btn btn-secondary ml-auto">Next</a>
             <?php endif; ?>
         </div>
     </div>
     <?php
-$conn->close();
-?>
-
-
+    $conn->close();
+    ?>
 </body>
 </html>
