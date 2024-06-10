@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 06, 2024 at 09:26 AM
+-- Generation Time: Jun 09, 2024 at 08:44 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -41,7 +41,11 @@ CREATE TABLE `assignments` (
 --
 
 INSERT INTO `assignments` (`assignment_id`, `course_id`, `title`, `description`, `due_date`, `file_url`) VALUES
-(1, 1, 'LO 1 . SETUP', 'NMDMDSFKJF', '2024-06-04', NULL);
+(1, 1, 'LO 1 . SETUP', 'NMDMDSFKJF', '2024-06-04', NULL),
+(2, 1, 'CAT 1', 'RTTRYTRYTRYTU', '2024-06-04', NULL),
+(3, 1, 'CAT 1', 'RTTRYTRYTRYTU', '2024-06-04', NULL),
+(4, 1, 'CAT 1', 'RTTRYTRYTRYTU', '2024-06-04', NULL),
+(5, 1, 'CAT 1', 'RTTRYTRYTRYTU', '2024-06-04', NULL);
 
 -- --------------------------------------------------------
 
@@ -56,13 +60,6 @@ CREATE TABLE `comments` (
   `content` text DEFAULT NULL,
   `created_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `comments`
---
-
-INSERT INTO `comments` (`comment_id`, `post_id`, `user_id`, `content`, `created_at`) VALUES
-(1, 1, 1, 'DFSDFDSFDSF', '2024-06-04 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -144,7 +141,7 @@ CREATE TABLE `news` (
 --
 
 INSERT INTO `news` (`news_id`, `title`, `content`, `author_id`, `published_at`) VALUES
-(1, 'theme', 'heheheheheeh', 1, '2024-06-04 00:00:00');
+(1, 'Quiz', 'rtiuiretre', 1, '2024-06-05 08:46:00');
 
 -- --------------------------------------------------------
 
@@ -165,7 +162,8 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`post_id`, `forum_id`, `user_id`, `content`, `created_at`) VALUES
-(1, 1, 1, 'dsahsajsajsajsajd', '2024-06-04 00:00:00');
+(26, 1, 2, 'gogo', '2024-06-09 11:02:00'),
+(27, 1, 2, 'rwarwa', '2024-06-09 11:22:00');
 
 -- --------------------------------------------------------
 
@@ -212,7 +210,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `username`, `password_hash`, `email`, `first_name`, `last_name`, `role`, `profile_picture`, `date_joined`) VALUES
-(1, 'IRAHARI', '81dc9bdb52d04dc20036dbd8313ed055', 'sosoweb777@gmail.com', 'Soso', 'IRAHARI', 'student', NULL, '2024-06-04');
+(10, 'bughi123', '$2y$10$pH1eI3YkDjGPoXhVTbXNTOSN8y8/ekyMGb.qiaASQ//qMrG9mVa2W', 'bugiruwendaj@gmail.com', 'Jean Bosco', 'BUGHI', 'student', 'uploads/Screenshot (6).png', '2024-06-09'),
+(11, 'bughi123', '$2y$10$iVVhGfV7z0IPTAKyvmKl6ukCcjq.z3gev9vf/Ew34hM6smLeAz3P.', 'bugiruwendaj@gmail.com', 'Jean Bosco', 'BUGHI', 'student', 'uploads/Screenshot 2023-11-10 161049.png', '2024-06-09'),
+(12, 'bughi123', '$2y$10$tXRu9rvuzIfvWqO26jpq8.6uPIgoss37z.v7RMf5Wptgc3WfW1E.G', 'bugiruwendaj@gmail.com', 'Jean Bosco', 'BUGHI', 'student', 'uploads/Screenshot 2023-1.png', '2024-06-09'),
+(13, 'bughi123', '$2y$10$RNbOW9.wxHZ793T.wKStEuzmcx7SpCBSXhFKZDQ8igM1/0rOTaR4.', 'bugiruwendaj@gmail.com', 'Jean Bosco', 'BUGHI', 'student', 'uploads/13.png', '2024-06-09'),
+(14, 'bughi123', '$2y$10$sspkIO65uNlKhsth5bnTKu15aRCZWXO5OZroQEpdJUQVaDaW618Me', 'bugiruwendaj@gmail.com', 'Jean Bosco', 'BUGHI', 'student', 'uploads/12.png', '2024-06-09'),
+(15, 'bughi123', '$2y$10$XVmHwrEuzS94tj29r3IGvuqemYv6HQn.vWWKQiZVNLAjUTHUOEaEK', 'bugiruwendaj@gmail.com', 'Jean Bosco', 'BUGHI', 'student', 'uploads/11.png', '2024-06-09');
 
 --
 -- Indexes for dumped tables
@@ -288,60 +291,52 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `courses`
+--
+ALTER TABLE `courses`
+  MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `faculty`
 --
 ALTER TABLE `faculty`
   MODIFY `faculty_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- Constraints for dumped tables
---
-
---
--- Constraints for table `assignments`
---
-ALTER TABLE `assignments`
-  ADD CONSTRAINT `assignments_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`course_id`);
-
---
--- Constraints for table `comments`
---
-ALTER TABLE `comments`
-  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`),
-  ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
-
---
--- Constraints for table `courses`
---
-ALTER TABLE `courses`
-  ADD CONSTRAINT `courses_ibfk_1` FOREIGN KEY (`faculty_id`) REFERENCES `users` (`user_id`);
-
---
--- Constraints for table `forums`
+-- AUTO_INCREMENT for table `forums`
 --
 ALTER TABLE `forums`
-  ADD CONSTRAINT `forums_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`course_id`),
-  ADD CONSTRAINT `forums_ibfk_2` FOREIGN KEY (`created_by`) REFERENCES `users` (`user_id`);
+  MODIFY `forum_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- Constraints for table `news`
+-- AUTO_INCREMENT for table `news`
 --
 ALTER TABLE `news`
-  ADD CONSTRAINT `news_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `users` (`user_id`);
+  MODIFY `news_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- Constraints for table `posts`
+-- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`forum_id`) REFERENCES `forums` (`forum_id`),
-  ADD CONSTRAINT `posts_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
--- Constraints for table `submissions`
+-- AUTO_INCREMENT for table `submissions`
 --
 ALTER TABLE `submissions`
-  ADD CONSTRAINT `submissions_ibfk_1` FOREIGN KEY (`assignment_id`) REFERENCES `assignments` (`assignment_id`),
-  ADD CONSTRAINT `submissions_ibfk_2` FOREIGN KEY (`student_id`) REFERENCES `users` (`user_id`);
+  MODIFY `submission_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
