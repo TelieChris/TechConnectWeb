@@ -3,15 +3,12 @@ pipeline {
 
     tools {
         jdk 'jdk17'
+        maven 'Maven'
     }
 
     environment {
         SCANNER_HOME = tool 'sonar-scanner'
         DOCKER_HUB_CREDENTIALS = credentials('DockerCredentials')
-    }
-    triggers {
-         cron('H */12 * * *') // This will schedule the build to run every 12 hours
-       // cron('H/5 * * * *') // This will schedule the build to run every 5 minutes
     }
 
     stages {
@@ -24,15 +21,20 @@ pipeline {
                     url: 'https://github.com/TelieChris/TechConnectWeb.git'
             }
         }
-        
-        stage('Test Using SonarQube') {
+        stage('Compile') {
+            steps {
+                bat 'mvn clean compile'
+            }
+        }
+        stage('SonarQube Analysis') {
             steps {
                 script {
                     def scannerHome = tool name: 'sonar-scanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
                     bat """
                     ${scannerHome}/bin/sonar-scanner \
                         -Dsonar.host.url=http://127.0.0.1:9000/ \
-                        -Dsonar.login=squ_78f316802985a0997b8eca0a9f15bc577ce19b16 \
+                        -Dsonar.login=squ_6537e0a318ecb2797da51d4a33cb976eaf7661b9 \
+                        -Dsonar.login=squ_2574ebde0615d0483c19f8043344f05802a078bb \
                         -Dsonar.projectKey=techconnect \
                         -Dsonar.projectName=techconnect \
                         -Dsonar.java.binaries=.
@@ -40,13 +42,22 @@ pipeline {
                 }
             }
         }
-        
-        stage('Build & Push Docker Image') {
+        stage('OWASP SCAN') {
+            steps {
+                dependencyCheck additionalArguments: ' --scan ./', odcInstallation: 'DP'
+                dependencyCheckPublisher pattern: '**/depandency-check-report.xml'
+            }
+        }
+        stage('Build Application') {
+            steps {
+                bat "mvn clean install -DskipTests=true"
+                 }
+        }
+       stage('Build & Push Docker Image') {
             steps {
                 script {
-                    withDockerRegistry(credentialsId: 'DockerCredentials', toolName: 'docker') {
+                    withDockerRegistry(credentialsId: 'DockerHubCredentials', toolName: 'docker') {
                         bat 'docker --version'  // Check Docker version to ensure it is installed
-                        //bat 'docker network create technetwork'
                         bat 'docker build -t techconnect:latest -f Dockerfile .'
                         bat 'docker tag techconnect:latest 50604/techconnect:latest'
                         bat 'docker push 50604/techconnect:latest'
@@ -57,11 +68,8 @@ pipeline {
         stage('Docker Deploy To container') {
             steps {
                 script {
-                    withDockerRegistry(credentialsId: 'DockerCredentials', toolName: 'docker') {
-                        // Stop and remove any existing container named 'techconnect'
-                        bat 'docker ps -q --filter "name=techconnect" | findstr . && docker stop techconnect && docker rm techconnect || echo "No existing container to stop"'
-                        // Run the new container
-                        bat "docker run -d --name techconnect -p 80:80 50604/techconnect:latest"
+                    withDockerRegistry(credentialsId: 'DockerHubCredentials', toolName: 'docker') {
+                        bat "docker run -d --name techconnect -p 8070:8070 50604/techconnect:latest"
                     }
                 }
             }
