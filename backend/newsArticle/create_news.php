@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['message_class'] = "alert-danger";
     }
     $conn->close();
-    header("Location: create_news.php");
+    header("Refresh: 3; url=create_news.php"); 
     exit();
 }
 
