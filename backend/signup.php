@@ -12,23 +12,9 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-
-$servername = "localhost"; // Replace with your database server details
-$username = "root"; // Replace with your database username
-$password = ""; // Replace with your database password
-$dbname = "techconnectdb";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Encrypt the password
+    $password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT); // Encrypt the password
     $email = $_POST['email'];
     $firstname = $_POST['firstname'];
     $lastname = $_POST['lastname'];
@@ -36,6 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $date_joined = date('Y-m-d H:i:s');
 
     // Handle file upload
+    $profile_picture_url = null; // Initialize as null
+
     if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] == 0) {
         $profile_picture = $_FILES['profile_picture'];
         $upload_dir = 'uploads/';
@@ -46,12 +34,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             die("Error uploading your profile picture.");
         }
-    } else {
-        $profile_picture_url = null; // Or set a default picture URL
     }
 
     // Insert data into the database
-    $sql = "INSERT INTO signup (username, password, email, firstname, lastname, role, profile_picture_url, date_joined)
+    $sql = "INSERT INTO users (username, password_hash, email, first_name, last_name, role, profile_picture, date_joined)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = $conn->prepare($sql);
@@ -59,10 +45,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Error preparing the SQL statement: " . $conn->error);
     }
 
-    $stmt->bind_param("ssssssss", $username, $password, $email, $firstname, $lastname, $role, $profile_picture_url, $date_joined);
+    $stmt->bind_param("ssssssss", $username, $password_hash, $email, $firstname, $lastname, $role, $profile_picture_url, $date_joined);
 
     if ($stmt->execute()) {
         echo "New record created successfully";
+        echo '<a href="../index.html">Go to home</a>';    
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
@@ -70,6 +57,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->close();
     $conn->close();
 }
-
 ?>
-

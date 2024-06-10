@@ -84,6 +84,29 @@ $result = $conn->query($sql);
             <?php endif; ?>
         </div>
     </div>
+
+    <script>
+$(document).ready(function() {
+    var currentPage = <?php echo $page; ?>;
+    var totalPages = <?php echo $total_pages; ?>;
+
+    $('#prev').click(function(e) {
+        e.preventDefault();
+        if (currentPage > 1) {
+            currentPage--;
+            window.location.href = 'dashIndex.php?page=' + currentPage;
+        }
+    });
+
+    $('#next').click(function(e) {
+        e.preventDefault();
+        if (currentPage < totalPages) {
+            currentPage++;
+            window.location.href = 'dashIndex.php?page=' + currentPage;
+        }
+    });
+});
+</script>
 </body>
 </html>
 
