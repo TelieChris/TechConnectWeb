@@ -48,12 +48,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("ssssssss", $username, $password_hash, $email, $firstname, $lastname, $role, $profile_picture_url, $date_joined);
 
     if ($stmt->execute()) {
-        echo "New record created successfully";
-        echo '<a href="../index.html">Go to home</a>';    
+        echo '<script type="text/javascript">';
+        echo 'alert("Account created successfully! Redirecting to login page...");';
+        echo 'window.location.href = "../frontend/pages/login.html";';
+        echo '</script>';
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
-
     $stmt->close();
     $conn->close();
 }
