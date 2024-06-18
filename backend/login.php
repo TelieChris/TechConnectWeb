@@ -5,13 +5,14 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "techconnectdb";
+$host = 'sql12.freesqldatabase.com';
+$dbname = 'sql12714518';
+$user = 'sql12714518';
+$pass = 'vgMtId84uh';
+$port = 3306;
 
 // Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($host, $user, $pass, $dbname, $port);
 
 // Check connection
 if ($conn->connect_error) {
