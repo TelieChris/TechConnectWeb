@@ -1,11 +1,12 @@
 <?php
-$servername = "localhost"; // Replace with your database server details
-$username = "root"; // Replace with your database username
-$password = ""; // Replace with your database password
-$dbname = "techconnectdb";
+$host = 'sql12.freesqldatabase.com';
+$dbname = 'sql12714518';
+$user = 'sql12714518';
+$pass = 'vgMtId84uh';
+$port = 3306;
 
 // Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($host, $user, $pass, $dbname, $port);
 
 // Check connection
 if ($conn->connect_error) {
