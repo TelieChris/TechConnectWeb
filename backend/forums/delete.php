@@ -1,9 +1,9 @@
 <?php
-// Database connection details
+// Database configuration
 $servername = "localhost";
-$username = "root"; // Change this if your database uses a different username
-$password = ""; // Change this if your database has a password
-$dbname = "techconnectdb"; // Database name
+$username = "root";
+$password = "";
+$dbname = "techconnectdb";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -13,23 +13,18 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Check if the delete request has been sent
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["delete_id"])) {
-    $delete_id = $_POST["delete_id"];
+// Retrieve the ID from the URL
+$forum_id = $_GET['forum_id'];
 
-    // Prepare and bind the delete statement
-    $stmt = $conn->prepare("DELETE FROM forums WHERE id = ?");
-    $stmt->bind_param("i", $delete_id);
+// Delete data from the database
+$sql = "DELETE FROM forums WHERE forum_id='$forum_id'";
 
-    // Execute the delete statement
-    if ($stmt->execute()) {
-        echo "Record deleted successfully";
-    } else {
-        echo "Error deleting record: " . $conn->error;
-    }
-
-    $stmt->close();
+if ($conn->query($sql) === TRUE) {
+    echo "Forum deleted successfully";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
 }
 
+// Close connection
 $conn->close();
 ?>
