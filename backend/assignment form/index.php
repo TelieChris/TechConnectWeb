@@ -3,7 +3,7 @@ require_once("db.php");
 ?>
 <html>
 <head>
-<title>Assignments Page</title>
+<title>PHP PDO CRUD</title>
 <style>
 body{width:615px;font-family:arial;letter-spacing:1px;line-height:20px;}
 .tbl-qa{width: 100%;font-size:0.9em;background-color: #f5f5f5;}
@@ -23,7 +23,6 @@ body{width:615px;font-family:arial;letter-spacing:1px;line-height:20px;}
   <thead>
 	<tr>
 	  <th class="table-header" width="40%">assignment_id</th>
-      
 	  <th class="table-header" width="40%">Title</th>
 	  <th class="table-header" width="40%">Description</th>
 	  <th class="table-header" width="20%">Due_date</th>

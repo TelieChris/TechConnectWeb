@@ -3,10 +3,10 @@ if (!empty($_POST["add_record"])) {
     require_once("db.php");
 
     // Fetch the course_id
-    $course_id = $_POST['course_id'];
+    $assignment_id  = $_POST['assignment_id '];
 
     // Prepend course_id to the title
-    $title = $course_id . ' ' . $_POST['title'];
+    $assignment_id  = $assignment_id . ' ' . $_POST['title'];
 
     // Prepare the SQL statement
     $sql = "INSERT INTO assignments (title, description, due_date, file_url) VALUES (:title, :description, :due_date, :file_url)";
@@ -40,7 +40,6 @@ body {width: 615px; font-family: Arial; letter-spacing: 1px; line-height: 20px;}
 </style>
 </head>
 <body>
-    <center>
 <div style="margin: 20px 0px; text-align: right;"><a href="index.php" class="button_link">Back to List</a></div>
 <div class="frm-add">
 <h1 class="demo-form-heading">Add New Record</h1>
@@ -52,7 +51,7 @@ body {width: 615px; font-family: Arial; letter-spacing: 1px; line-height: 20px;}
           <!-- Populate course options from the database -->
           <?php
           require_once("db.php");
-          $sql = "SELECT * FROM assignments";
+          $sql = "SELECT * FROM courses";
           $result = $pdo_conn->query($sql);
           if ($result->rowCount() > 0) {
               while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
@@ -83,6 +82,5 @@ body {width: 615px; font-family: Arial; letter-spacing: 1px; line-height: 20px;}
   </div>
 </form>
 </div> 
-</center>
 </body>
 </html>
