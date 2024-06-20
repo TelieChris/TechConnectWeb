@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Registration</title>
+    <title>Staff Registration</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container mt-5">
-        <h2>User Registration</h2>
+        <h2>Staff Registration</h2>
         <form action="../../backend/signup.php" method="post" enctype="multipart/form-data">
 
             <div class="form-group">
@@ -34,7 +34,8 @@
             <div class="form-group">
                 <label for="role">Role</label>
                 <select class="form-control" id="role" name="role" required>
-                    <option value="student">Student</option>
+                    <option value="admin">Admin</option>
+                    <option value="lecturer">Lecturer</option>
                 </select>
             </div>
             <div class="form-group">
