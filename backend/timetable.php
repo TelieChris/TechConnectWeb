@@ -42,6 +42,7 @@ $conn->close();
                     <th>Course Code</th>
                     <th>Assignment Title</th>
                     <th>Due Date</th>
+                    <th>Decision</th>
                 </tr>
             </thead>
             <tbody>
