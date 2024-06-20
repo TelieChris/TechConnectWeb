@@ -1,8 +1,8 @@
 <?php
-$host = 'sql12.freesqldatabase.com';
-$dbname = 'sql12714518';
-$user = 'sql12714518';
-$pass = 'vgMtId84uh';
+$host = '127.0.0.1';
+$dbname = 'techconnectdb';
+$user = 'root';
+$pass = '';
 $port = 3306;
 
 // Create connection
@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt->execute()) {
         echo '<script type="text/javascript">';
         echo 'alert("Account created successfully! Redirecting to login page...");';
-        echo 'window.location.href = "../frontend/pages/login.html";';
+        echo 'window.location.href = "../frontend/pages/login.php";';
         echo '</script>';
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;

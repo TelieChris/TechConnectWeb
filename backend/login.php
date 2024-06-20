@@ -5,10 +5,10 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-$host = 'sql12.freesqldatabase.com';
-$dbname = 'sql12714518';
-$user = 'sql12714518';
-$pass = 'vgMtId84uh';
+$host = '127.0.0.1';
+$dbname = 'techconnectdb';
+$user = 'root';
+$pass = '';
 $port = 3306;
 
 // Create connection
@@ -18,8 +18,6 @@ $conn = new mysqli($host, $user, $pass, $dbname, $port);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
-$error_message = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['username']) && isset($_POST['password'])) {
@@ -48,29 +46,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['username'] = $username;
                 $_SESSION['role'] = $role;
 
+                // Set success message
+                $_SESSION['message'] = "Login successful!";
+                $_SESSION['message_type'] = "success";
+
+                // Redirect based on role
                 if ($role == 'student') {
-                    echo "Redirecting to: ../frontend/Dashboard/Student/StudentDashboard.html";
                     header("Location: ../frontend/Dashboard/Student/StudentDashboard.html");
-                } else if ($role == 'faculty') {
-                    echo "Redirecting to: ../frontend/Dashboard/Admin/index.html";
+                    exit();
+                } else if ($role == 'lecturer' || $role == 'admin') {
                     header("Location: ../frontend/Dashboard/Admin/index.html");
+                    exit();
                 }
-                exit();
             } else {
                 // Invalid password
-                $error_message = "Invalid username or password.";
+                $_SESSION['message'] = "Invalid username or password.";
+                $_SESSION['message_type'] = "danger";
             }
         } else {
             // Invalid username
-            $error_message = "Invalid username or password.";
+            $_SESSION['message'] = "Invalid username or password.";
+            $_SESSION['message_type'] = "danger";
         }
 
         $stmt->close();
     } else {
-        $error_message = "Please fill in both username and password.";
+        $_SESSION['message'] = "Please fill in both username and password.";
+        $_SESSION['message_type'] = "danger";
     }
 }
 
 $conn->close();
+header("Location: ../frontend/pages/login.php");
+exit();
 ?>
-
