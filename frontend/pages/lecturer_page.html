@@ -14,8 +14,13 @@
             height: 100vh;
             overflow: hidden;
         }
+        .content-wrapper {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
         .sidebar {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 250px;
@@ -27,8 +32,9 @@
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
             overflow-y: auto;
             z-index: 2;
-            height: calc(100% - 100px); /* Adjusted height to accommodate for the footer */
-            margin-bottom: 20px; /* Added margin between sidebar and footer */
+            height: calc(96.9vh - 50px); /* Adjusted for footer */
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
         }
         .sidebar img {
             border-radius: 50%;
@@ -69,17 +75,16 @@
             margin: 5px 0;
         }
         .main-content {
-            margin-left: 270px;
+            margin-left: 20px;
             padding: 20px;
             background-color: #ffffff;
             overflow-y: auto;
             width: calc(100% - 270px);
-            flex: 1; /* This will make the main content area grow to fill the available space */
+            flex: 1;
             overflow-y: auto;
-            margin-bottom: 50px;
         }
         .content-section {
-            display: none; /* Hide all sections by default */
+            display: none;
             margin-bottom: 20px;
             background-color: #f9f9f9;
             border-radius: 8px;
@@ -87,7 +92,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
         }
         .content-section.active {
-            display: block; /* Show active section */
+            display: block;
         }
         .content-section h3 {
             background-color: #1a2b4e;
@@ -129,7 +134,7 @@
         .content-section form input[type="number"],
         .content-section form select,
         .content-section form textarea,
-        .content-section form input[type="file"] {
+        .content-section form input[type="file"], input[type="email"], input[type="password"] {
             margin-bottom: 15px;
             padding: 10px;
             font-size: 16px;
@@ -177,12 +182,46 @@
             position: absolute;
             bottom: 0;
             width: 100%;
-            margin-top: 20px; /* Added margin to create space between footer and sidebar */
+            margin-top: 20px;
+        }
+        .toggle-btn {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background-color: #1a2b4e;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            z-index: 3;
+        }
+        @media (min-width: 768px) {
+            .sidebar {
+                transform: translateX(0);
+            }
+            .toggle-btn {
+                display: none;
+            }
+            .main-content {
+                margin-left: 270px;
+                width: calc(100% - 270px);
+            }
+        }
+        @media (max-width: 767px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="sidebar">
+    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+    <div class="sidebar" id="sidebar">
         <img src="profile.jpg" alt="Lecturer Profile">
         <h2>Hi, Lecturer</h2>
         <a href="#home" onclick="showSection('home')">Home</a>
@@ -200,7 +239,7 @@
         <a href="#settings" onclick="showSection('settings')">Settings</a>
         <a href="#logout">Logout</a>
     </div>
-    <div class="main-content">
+    <div class="main-content" onclick="hideSidebar()">
         <div id="home" class="content-section active">
             <h3>Welcome to Your Dashboard</h3>
             <p>Here you can manage your courses, assignments, and students efficiently.</p>
@@ -255,7 +294,7 @@
         <div id="publish-assignment" class="content-section">
             <h3>Publish Assignment</h3>
             <form>
-                <label for="course">Select Course:</label>
+                <label for="course">Course:</label>
                 <select id="course" name="course">
                     <option value="ict101">Introduction to Professional Development</option>
                     <option value="ict102">Introduction to Machine Learning</option>
@@ -263,14 +302,14 @@
                     <option value="ict104">Development Operations</option>
                     <option value="ict105">Mobile and Cloud Software Development</option>
                 </select>
-                <label for="title">Assignment Title:</label>
-                <input type="text" id="title" name="title" required>
-                <label for="description">Assignment Description:</label>
-                <textarea id="description" name="description" required></textarea>
+                <label for="assignment-title">Assignment Title:</label>
+                <input type="text" id="assignment-title" name="assignment-title" required>
                 <label for="due-date">Due Date:</label>
                 <input type="date" id="due-date" name="due-date" required>
-                <label for="points">Points:</label>
-                <input type="number" id="points" name="points" required>
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" rows="4" required></textarea>
+                <label for="file">Attach File:</label>
+                <input type="file" id="file" name="file">
                 <input type="submit" value="Publish">
             </form>
         </div>
@@ -280,7 +319,7 @@
                 <tr>
                     <th>Assignment Title</th>
                     <th>Student Name</th>
-                    <th>Submitted Date</th>
+                    <th>Submission Date</th>
                     <th>Grade</th>
                     <th>Action</th>
                 </tr>
@@ -289,21 +328,27 @@
                     <td>John Doe</td>
                     <td>2023-01-15</td>
                     <td>A</td>
-                    <td><button>View</button></td>
+                    <td class="actions">
+                        <button class="save">View</button>
+                    </td>
                 </tr>
                 <tr>
                     <td>Assignment 2</td>
                     <td>Jane Smith</td>
                     <td>2023-01-20</td>
                     <td>B+</td>
-                    <td><button>View</button></td>
+                    <td class="actions">
+                        <button class="save">View</button>
+                    </td>
                 </tr>
                 <tr>
                     <td>Assignment 3</td>
                     <td>Sam Brown</td>
                     <td>2023-01-22</td>
                     <td>A-</td>
-                    <td><button>View</button></td>
+                    <td class="actions">
+                        <button class="save">View</button>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -315,24 +360,37 @@
                     <th>Course</th>
                     <th>Published Date</th>
                     <th>Due Date</th>
+                    <th>Actions</th>
                 </tr>
                 <tr>
                     <td>Assignment 1</td>
                     <td>Introduction to Professional Development</td>
                     <td>2023-01-10</td>
                     <td>2023-01-25</td>
+                    <td class="actions">
+                        <button class="save">Edit</button>
+                        <button class="delete">Delete</button>
+                    </td>
                 </tr>
                 <tr>
                     <td>Assignment 2</td>
                     <td>Introduction to Machine Learning</td>
                     <td>2023-02-01</td>
                     <td>2023-02-15</td>
+                    <td class="actions">
+                        <button class="save">Edit</button>
+                        <button class="delete">Delete</button>
+                    </td>
                 </tr>
                 <tr>
                     <td>Assignment 3</td>
                     <td>Computational Methods</td>
                     <td>2023-02-15</td>
                     <td>2023-03-01</td>
+                    <td class="actions">
+                        <button class="save">Edit</button>
+                        <button class="delete">Delete</button>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -344,24 +402,34 @@
                     <th>Student Name</th>
                     <th>Email</th>
                     <th>Enrolled Course</th>
+                    <th>Actions</th>
                 </tr>
                 <tr>
                     <td>2023101</td>
                     <td>John Doe</td>
                     <td>john.doe@example.com</td>
                     <td>ICT101</td>
+                    <td class="actions">
+                        <button class="save">Contact</button>
+                    </td>
                 </tr>
                 <tr>
                     <td>2023102</td>
                     <td>Jane Smith</td>
                     <td>jane.smith@example.com</td>
                     <td>ICT102</td>
+                    <td class="actions">
+                        <button class="save">Contact</button>
+                    </td>
                 </tr>
                 <tr>
                     <td>2023103</td>
                     <td>Sam Brown</td>
                     <td>sam.brown@example.com</td>
                     <td>ICT103</td>
+                    <td class="actions">
+                        <button class="save">Contact</button>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -406,27 +474,64 @@
         </div>
         <div id="settings" class="content-section">
             <h3>Settings</h3>
-            <p>Manage your account settings here.</p>
+            <form>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="lecturer@example.com" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <input type="submit" value="Update Settings">
+            </form>
         </div>
     </div>
-    <div class="footer">
-        <p>&copy; 2023 Lecturer Dashboard. All rights reserved.</p>
-    </div>
+    <footer class="footer">
+        &copy; 2024 Lecturer Dashboard
+    </footer>
     <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar.style.transform === 'translateX(0px)') {
+                sidebar.style.transform = 'translateX(-100%)';
+            } else {
+                sidebar.style.transform = 'translateX(0)';
+            }
+        }
+
         function showSection(sectionId) {
             const sections = document.querySelectorAll('.content-section');
             sections.forEach(section => {
-                section.classList.remove('active');
                 if (section.id === sectionId) {
                     section.classList.add('active');
+                } else {
+                    section.classList.remove('active');
                 }
             });
+            if (window.innerWidth <= 767) {
+                document.getElementById('sidebar').style.transform = 'translateX(-100%)';
+            }
         }
 
         function toggleDropdown() {
-            const dropdownContainer = document.querySelector('.dropdown-container');
-            dropdownContainer.style.display = dropdownContainer.style.display === 'block' ? 'none' : 'block';
+            const dropdown = document.querySelector('.dropdown-container');
+            if (dropdown.style.display === 'block') {
+                dropdown.style.display = 'none';
+            } else {
+                dropdown.style.display = 'block';
+            }
         }
+
+        function hideSidebar() {
+            if (window.innerWidth <= 767) {
+                document.getElementById('sidebar').style.transform = 'translateX(-100%)';
+            }
+        }
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 767) {
+                document.getElementById('sidebar').style.transform = 'translateX(0)';
+            } else {
+                document.getElementById('sidebar').style.transform = 'translateX(-100%)';
+            }
+        });
     </script>
 </body>
 </html>
