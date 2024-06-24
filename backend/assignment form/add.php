@@ -2,19 +2,14 @@
 if (!empty($_POST["add_record"])) { 
     require_once("db.php");
 
-    // Fetch the course_id
-    $assignment_id  = $_POST['assignment_id '];
-
-    // Prepend course_id to the title
-    $assignment_id  = $assignment_id . ' ' . $_POST['title'];
-
     // Prepare the SQL statement
-    $sql = "INSERT INTO assignments (title, description, due_date, file_url) VALUES (:title, :description, :due_date, :file_url)";
+    $sql = "INSERT INTO assignments (course_id, title, description, due_date, file_url) VALUES (:course_id, :title, :description, :due_date, :file_url)";
     $pdo_statement = $pdo_conn->prepare($sql);
     
-    // Execute the statement with the modified title
+    // Execute the statement
     $result = $pdo_statement->execute(array(
-        ':title' => $title,
+        ':course_id' => $_POST['course_id'],
+        ':title' => $_POST['title'],
         ':description' => $_POST['description'],
         ':due_date' => $_POST['due_date'],
         ':file_url' => $_POST['file_url']
