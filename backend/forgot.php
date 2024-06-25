@@ -17,7 +17,7 @@ $user = 'root';
 $pass = '';
 $port = 3306;
 
-// Create connection
+
 $conn = new mysqli($host, $user, $pass, $dbname, $port);
 
 // Check connection
