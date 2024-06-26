@@ -38,7 +38,7 @@ function send_reset_email($email, $token) {
         $mail->Host = 'smtp.sendgrid.net'; // Set the SMTP server to send through
         $mail->SMTPAuth = true;
         $mail->Username = 'apikey'; // SMTP username (use 'apikey' for SendGrid)
-        $mail->Password = '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'; // SMTP password (API Key)
+        $mail->Password = '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'; // SMTP password (API Key)
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
 
