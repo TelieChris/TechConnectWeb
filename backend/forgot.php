@@ -11,10 +11,10 @@ require 'vendor/autoload.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-$host = '127.0.0.1';
-$dbname = 'techconnectdb';
-$user = 'root';
-$pass = '';
+$host = 'sql12.freesqldatabase.com';
+$dbname = 'sql12716221';
+$user = 'sql12716221';
+$pass = 'FfJUdVvA73';
 $port = 3306;
 
 // Create connection
