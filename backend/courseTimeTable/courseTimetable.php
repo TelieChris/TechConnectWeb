@@ -17,6 +17,11 @@ if ($conn->connect_error) {
 // Query to retrieve course timetable data
 $sql = "SELECT course_name, day, time, venue FROM course_timetable";
 $result = $conn->query($sql);
+
+// Check if the query was successful
+if ($result === false) {
+    die("Error: " . $conn->error);
+}
 ?>
 
 <!DOCTYPE html>
@@ -63,6 +68,7 @@ $result = $conn->query($sql);
         <table>
             <thead>
                 <tr>
+                <!-- <th>Number</th> -->
                     <th>Course Name</th>
                     <th>Day</th>
                     <th>Time</th>
@@ -71,6 +77,7 @@ $result = $conn->query($sql);
             </thead>
             <tbody>
                 <?php
+                 
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr>
