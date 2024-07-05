@@ -31,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 // Fetch all faculties to display in the dropdown
+// you can fetch from faculty by selecting its Id 
 $sql = "SELECT faculty_id, name FROM faculty";
 $faculties = $conn->query($sql);
 ?>
