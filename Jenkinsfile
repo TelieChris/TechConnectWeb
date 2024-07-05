@@ -33,7 +33,7 @@ pipeline {
                     ${scannerHome}/bin/sonar-scanner \
                         -Dsonar.host.url=http://127.0.0.1:9000/ \
                         -Dsonar.login=squ_a11267a60aa461c2681a42470344d21aba256abd \
-                        -Dsonar.projectKey=Techconnect \
+                        -Dsonar.projectKey=techconnect \
                         -Dsonar.projectName=techconnect \
                         -Dsonar.java.binaries=.
                     """
