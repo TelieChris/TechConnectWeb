@@ -31,6 +31,7 @@ $stmt->bind_param("iissis", $forum_id, $course_id, $title, $description, $create
 if ($stmt->execute()) {
     echo "New forum created successfully";
 } else {
+    echo "New forum not created";
     echo "Error: " . $stmt->error;
 }
 
