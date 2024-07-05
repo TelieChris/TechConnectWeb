@@ -1,5 +1,4 @@
 <?php
-// Database connection details
 $host = 'sql12.freesqldatabase.com';
 $dbname = 'sql12716221';
 $user = 'sql12716221';
@@ -57,13 +56,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <div class="container">
+    <?php if (!empty($message)) echo $message; ?>
         <h2>Create Timetable Entry</h2>
         <form action="createtimetable.php" method="post">
             <div class="form-group">
                 <label for="course_name">Course Name:</label>
-                <input type="text" class="form-control" id="course_name" name="course_name" required>
+                <select class="form-control" id="course_name" name="course_name" required>
+                <option value="">Select Course Name</option>
+                    <!-- Populate forum options from the database -->
+                    <?php
+                    $sql = "SELECT * FROM course_timetable"; // Example query to get forums
+                    $result = $conn->query($sql);
+                    if ($result->num_rows > 0) {
+                        while($row = $result->fetch_assoc()) {
+                            echo "<option value='{$row['c_id']}'>{$row['course_name']}</option>";
+                        }
+                    }
+                    ?>
+    </select>
             </div>
             <div class="form-group">
+           
                 <label for="day">Day:</label>
                 <select class="form-control" id="day" name="day" required>
                     <option>Select day</option>
