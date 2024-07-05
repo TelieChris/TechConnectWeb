@@ -66,7 +66,7 @@ if (isset($_GET['course_id'])) {
 </head>
 <body>
     <div class="container mt-5">
-        <h2 class="alert alert-primary p-3 text-center">Update Course</h2>
+        <h2 class="alert alert-primary p-3 text-center">Update Courses</h2>
 
         <?php if (isset($_SESSION['message'])): ?>
             <div class="alert <?php echo $_SESSION['message_class']; ?> text-center">
@@ -106,7 +106,7 @@ if (isset($_GET['course_id'])) {
                     ?>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Update Course</button>
+            <button type="submit" class="btn btn-primary">Update</button>
         </form>
     </div>
 </body>
