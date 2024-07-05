@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($stmt->execute()) {
         echo '<script type="text/javascript">';
-        echo 'alert("Account created successfully! Redirecting to login page...");';
+        echo 'alert("your Account created successfully! Redirecting to login page...");';
         echo 'window.location.href = "../frontend/pages/login.php";';
         echo '</script>';
     } else {
