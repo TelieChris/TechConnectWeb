@@ -1,43 +1,60 @@
 <?php
-// Database configuration
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "techconnectdb";
+$conn = new mysqli('localhost', 'root', '', 'forum_db');
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Retrieve form data
-$course_id = $_POST['course_id'];
-$title = $_POST['title'];
-$description = $_POST['description'];
-$created_by = $_POST['created_by'];
-$created_at = $_POST['created_at'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $forum_id = $_POST['forum_id'];
+    $course_id = $_POST['course_id'];
+    $title = $_POST['title'];
+    $description = $_POST['description'];
+    $created_by = $_POST['created_by'];
+    $created_at = $_POST['created_at'];
 
-// Validate form data
-if(empty($course_id) || empty($title) || empty($created_by) || empty($created_at)) {
-    echo "All fields are required.";
-    exit;
+    $sql = "UPDATE forums SET course_id='$course_id', title='$title', description='$description', created_by='$created_by', created_at='$created_at' WHERE forum_id='$forum_id'";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Forum updated successfully";
+    } else {
+        echo "Error updating forum: " . $conn->error;
+    }
 }
 
-// Prepare and bind
-$stmt = $conn->prepare("INSERT INTO forums (course_id, title, description, created_by, created_at) VALUES (?, ?, ?, ?, ?)");
-$stmt->bind_param("issss", $course_id, $title, $description, $created_by, $created_at);
+$forum_id = $_GET['forum_id'];
+$sql = "SELECT * FROM forums WHERE forum_id='$forum_id'";
+$result = $conn->query($sql);
+$row = $result->fetch_assoc();
 
-// Execute the statement
-if ($stmt->execute()) {
-    echo "New forum created successfully";
-} else {
-    echo "Error: " . $stmt->error;
-}
-
-// Close the statement and connection
-$stmt->close();
 $conn->close();
 ?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Forum</title>
+</head>
+<body>
+    <h2>Update Forum</h2>
+    <form action="updateforum.php" method="POST">
+        <input type="hidden" name="forum_id" value="<?php echo $row['forum_id']; ?>">
+        <label for="course_id">Course ID:</label><br>
+        <input type="number" id="course_id" name="course_id" value="<?php echo $row['course_id']; ?>" required><br><br>
+
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="title" value="<?php echo $row['title']; ?>" required><br><br>
+
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description" required><?php echo $row['description']; ?></textarea><br><br>
+
+        <label for="created_by">Created By:</label><br>
+        <input type="text" id="created_by" name="created_by" value="<?php echo $row['created_by']; ?>" required><br><br>
+
+        <label for="created_at">Created At:</label><br>
+        <input type="datetime-local" id="created_at" name="created_at" value="<?php echo date('Y-m-d\TH:i', strtotime($row['created_at'])); ?>" required><br><br>
+
+        <input type="submit" value="Update Forum">
+    </form>
+</body>
+</html>

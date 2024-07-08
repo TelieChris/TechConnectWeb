@@ -5,10 +5,10 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-$host = '127.0.0.1';
-$dbname = 'techconnectdb';
-$user = 'root';
-$pass = '';
+$host = 'sql12.freesqldatabase.com';
+$dbname = 'sql12716221';
+$user = 'sql12716221';
+$pass = 'FfJUdVvA73';
 $port = 3306;
 
 // Create connection
