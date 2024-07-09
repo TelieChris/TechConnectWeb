@@ -197,6 +197,13 @@ $userRole = $_SESSION['role'];
         b{
             text-transform: capitalize;
         }
+        span img {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+            color:white;
+            }
+
     </style>
 </head>
 <body>            
@@ -216,7 +223,7 @@ $userRole = $_SESSION['role'];
                     <li><a href="../../../backend/forums/view_report.php" target="content-frame" onclick="setActive(this)">Forum</a></li>
                     <li><a href="news.html" target="content-frame" onclick="setActive(this)">News</a></li>
                     <li><a href="settings.html" target="content-frame" onclick="setActive(this)">Settings</a></li>
-                    <li><a href="../../../backend/logout.php">Logout</a></li>
+                    <li><a href="../../../index.html">Logout</a></li>
                 </ul>
             </nav>
         </div>
@@ -229,12 +236,12 @@ $userRole = $_SESSION['role'];
             <h2>CONNECT WITH US</h2>
             <hr>
             <div class="contact-info">
-                <span class="contact-item"><img src="imgs/call.PNG" alt="Phone"> 250789294965</span>
-                <span class="contact-item"><img src="imgs/instagram.PNG" alt="Instagram"> techconnect</span>
-                <span class="contact-item"><img src="imgs/git.PNG" alt="GitHub"> techconnect250</span>
-                <span class="contact-item"><img src="imgs/facebook.PNG" alt="Facebook"> techconnect Rwanda</span>
-                <span class="contact-item"><img src="imgs/TEC.PNG" alt="LinkedIn"> techconnect Rwanda</span>
-                <span class="contact-item"><img src="imgs/Mail.PNG" alt="Email"> techconnect@gmail.com</span>
+                <span class="contact-item"><img src="../../../frontend/imgs/call.PNG" alt="Phone"> 250789294965</span>
+                <span class="contact-item"><img src="../../../frontend/imgs/instagram.PNG" alt="Instagram"> techconnect</span>
+                <span class="contact-item"><img src="../../../frontend/imgs/git.PNG" alt="GitHub"> techconnect250</span>
+                <span class="contact-item"><img src="../../../frontend/imgs/facebook.PNG" alt="Facebook"> techconnect Rwanda</span>
+                <span class="contact-item"><img src="../../../frontend/imgs/TEC.PNG" alt="LinkedIn"> techconnect Rwanda</span>
+                <span class="contact-item"><img src="../../../frontend/imgs/Mail.PNG" alt="Email"> techconnect@gmail.com</span>
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2024 TechConnect. All rights reserved By Btech IT.</p>
