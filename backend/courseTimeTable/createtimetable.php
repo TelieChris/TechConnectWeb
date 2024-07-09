@@ -65,11 +65,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <option value="">Select Course Name</option>
                     <!-- Populate forum options from the database -->
                     <?php
-                    $sql = "SELECT * FROM course_timetable"; // Example query to get forums
+                    $sql = "SELECT * FROM courses"; // Example query to get forums
                     $result = $conn->query($sql);
                     if ($result->num_rows > 0) {
                         while($row = $result->fetch_assoc()) {
-                            echo "<option value='{$row['c_id']}'>{$row['course_name']}</option>";
+                            echo "<option value='{$row['course_name']}'>{$row['course_name']}</option>";
                         }
                     }
                     ?>
