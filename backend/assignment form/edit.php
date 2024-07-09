@@ -37,11 +37,10 @@ $result = $pdo_statement->fetchAll();
 <body>
     <div style="margin: 20px 0px; text-align: right;">
         <a href="index.php" class="button_link">Back to List</a>
-    </div> 
+    </div>
     <div class="frm-add">
         <h1 class="demo-form-heading">Edit Record</h1>
         <form name="frmAdd" action="" method="POST">
-            
             <div class="demo-form-row">
                 <label>Title: </label><br>
                 <textarea name="title" class="demo-form-field" rows="5" required><?php echo htmlspecialchars($result[0]['description']); ?></textarea>
