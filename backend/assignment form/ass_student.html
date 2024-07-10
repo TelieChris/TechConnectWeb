@@ -1,0 +1,37 @@
+<html>
+<head>
+<title>PHP PDO CRUD - Upload Assignment</title>
+<style>
+body {width: 615px; font-family: Arial; letter-spacing: 1px; line-height: 20px;}
+.button_link {color: #FFF; text-decoration: none; background-color: #428a8e; padding: 10px;}
+.frm-add {border: #c3bebe 1px solid; padding: 30px;}
+.demo-form-heading {margin-top: 0px; font-weight: 500;} 
+.demo-form-row {margin-top: 20px;}
+.demo-form-field {width: 300px; padding: 10px;}
+.demo-form-submit {color: #FFF; background-color: #414444; padding: 10px 50px; border: 0px; cursor: pointer;}
+</style>
+</head>
+<body>
+<div style="margin: 20px 0px; text-align: right;">
+<a href="pendingass.php" class="button_link">
+        <img src="crud-icon/add.png" title="Add New Record" style="vertical-align:bottom;" /> View All Pending Assignments
+    </a> &nbsp;&nbsp;&nbsp;
+  <a href="stude_index.php" class="button_link">View All Submitted Assignments</a></div>
+<div class="frm-add">
+<h1 class="demo-form-heading">Upload Assignment</h1>
+<form name="frmUpload" action="upload_assignment.php" method="POST" enctype="multipart/form-data">
+  <div class="demo-form-row">
+      <label>Course_id: </label><br>
+      <textarea name="course_id" class="demo-form-field" rows="5" required></textarea>
+  </div> 
+  <div class="demo-form-row">
+      <label>Assignment File: </label><br>
+      <input type="file" name="assignment_file" class="demo-form-field" required />
+  </div>
+  <div class="demo-form-row">
+      <input name="upload_assignment" type="submit" value="Upload" class="demo-form-submit">
+  </div>
+</form>
+</div> 
+</body>
+</html>

@@ -1,11 +1,12 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "techconnectdb";
+$host = 'sql12.freesqldatabase.com';
+$dbname = 'sql12714518';
+$user = 'sql12714518';
+$pass = 'vgMtId84uh';
+$port = 3306;
 
 // Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($host, $user, $pass, $dbname, $port);
 
 // Check connection
 if ($conn->connect_error) {
@@ -41,6 +42,7 @@ $conn->close();
                     <th>Course Code</th>
                     <th>Assignment Title</th>
                     <th>Due Date</th>
+                    <th>Decision</th>
                 </tr>
             </thead>
             <tbody>

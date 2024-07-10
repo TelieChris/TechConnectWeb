@@ -24,7 +24,7 @@ pipeline {
                     url: 'https://github.com/TelieChris/TechConnectWeb.git'
             }
         }
-        
+        // -Dsonar.login=squ_6537e0a318ecb2797da51d4a33cb976eaf7661b9 \
         stage('Test Using SonarQube') {
             steps {
                 script {
@@ -32,8 +32,7 @@ pipeline {
                     bat """
                     ${scannerHome}/bin/sonar-scanner \
                         -Dsonar.host.url=http://127.0.0.1:9000/ \
-                        -Dsonar.login=squ_6537e0a318ecb2797da51d4a33cb976eaf7661b9 \
-                        -Dsonar.login=squ_2574ebde0615d0483c19f8043344f05802a078bb \
+                        -Dsonar.login=squ_a11267a60aa461c2681a42470344d21aba256abd \
                         -Dsonar.projectKey=techconnect \
                         -Dsonar.projectName=techconnect \
                         -Dsonar.java.binaries=.
