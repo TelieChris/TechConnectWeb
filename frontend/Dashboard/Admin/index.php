@@ -273,14 +273,14 @@ $userRole = $_SESSION['role'];
               </a>
               <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="../../pages/courseCreation.html">New Course</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="courseCreation.html">New Course</a></li>
                   <li class="nav-item"> <a class="nav-link" href="#">View Courses</a></li>
                   <!-- <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li> -->
                 </ul>
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" data-toggle="collapse" href="../../pages/assignmentsCreation.html" aria-expanded="false" aria-controls="ui-basic">
+              <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                 <span class="icon-bg"><i class="mdi mdi-crosshairs-gps menu-icon"></i></span>
                 <span class="menu-title">Assignment</span>
                 <i class="menu-arrow"></i>
