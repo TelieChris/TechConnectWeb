@@ -1,85 +1,46 @@
-<?php
-session_start();
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="card p-4 shadow-sm w-100" style="max-width: 400px;">
+            <div class="card-body">
+                <h3 class="card-title text-center mb-4">Login</h3>
+                
+                <?php if (isset($_SESSION['message'])): ?>
+                    <div class="alert alert-<?= $_SESSION['message_type'] ?> alert-dismissible fade show" role="alert">
+                        <?= $_SESSION['message'] ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <?php unset($_SESSION['message']); endif; ?>
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-$host = 'sql12.freesqldatabase.com';
-$dbname = 'sql12716221';
-$user = 'sql12716221';
-$pass = 'FfJUdVvA73';
-$port = 3306;
-
-// Create connection
-$conn = new mysqli($host, $user, $pass, $dbname, $port);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['username']) && isset($_POST['password'])) {
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-
-        // Prepare and bind
-        $sql = "SELECT user_id, password_hash, role FROM users WHERE username = ?";
-        $stmt = $conn->prepare($sql);
-        if ($stmt === false) {
-            die("Error preparing the SQL statement: " . $conn->error);
-        }
-
-        $stmt->bind_param("s", $username);
-        $stmt->execute();
-        $stmt->store_result();
-
-        if ($stmt->num_rows > 0) {
-            $stmt->bind_result($user_id, $password_hash, $role);
-            $stmt->fetch();
-
-            if (password_verify($password, $password_hash)) {
-                // Password is correct, set session variables
-                session_regenerate_id(); // Regenerate session ID to prevent session fixation
-                $_SESSION['user_id'] = $user_id;
-                $_SESSION['username'] = $username;
-                $_SESSION['role'] = $role;
-
-                // Set success message
-                $_SESSION['message'] = "Login successful!";
-                $_SESSION['message_type'] = "success";
-
-                // Redirect based on role
-                if ($role == 'student') {
-                    header("Location: ../frontend/Dashboard/Student/StudentDashboard.php");
-                    exit();
-                } else if ($role == 'lecturer') {
-                    header("Location: ../frontend/Dashboard/Admin/index.php");
-                    exit();
-                } else if ($role == 'admin') {
-                    header("Location: ../frontend/pages/AdminPage.php");
-                    exit();
-                }
-            } else {
-                // Invalid password
-                $_SESSION['message'] = "Invalid username or password.";
-                $_SESSION['message_type'] = "danger";
-            }
-        } else {
-            // Invalid username
-            $_SESSION['message'] = "Invalid username or password.";
-            $_SESSION['message_type'] = "danger";
-        }
-
-        $stmt->close();
-    } else {
-        $_SESSION['message'] = "Please fill in both username and password.";
-        $_SESSION['message_type'] = "danger";
-    }
-}
-
-$conn->close();
-header("Location: ../frontend/pages/login.php");
-exit();
-?>
+                <form action="" method="post">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-person"></i></span>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon2"><i class="bi bi-lock"></i></span>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
