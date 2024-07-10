@@ -1,3 +1,8 @@
+
+
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,24 +11,65 @@
 <body>
     <h2>Create a New Forum</h2>
     <form action="insertforum.php" method="POST">
-        <label for="forum_id">Forum ID:</label><br>
-        <input type="number" id="forum_id" name="forum_id" required><br><br>
+        <div class="container mt-5">
+            <?php if (!empty($message)) echo $message; ?>
+            <h2 class="alert alert-primary">Create Post</h2>
+            <form action="create_post.php" method="post">
+                <div class="form-group">
+                    <label for="forum_id">Forum ID</label>
+                    <select class="form-control" id="forum_id" name="forum_id" required>
+                        <option value="">Select Forum</option>
+                        <!-- Populate forum options from the database -->
+                        <?php
+                        $sql = "SELECT * FROM forums"; // Example query to get forums
+                        $result = $conn->query($sql);
+                        if ($result->num_rows > 0) {
+                            while($row = $result->fetch_assoc()) {
+                                echo "<option value='{$row['forum_id']}'>{$row['title']}</option>";
+                            }
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="user_id">User ID</label>
+                    <select class="form-control" id="user_id" name="user_id" required>
+                        <option value="">Select User</option>
+                        <!-- Populate user options from the database -->
+                        <?php
+                        $sql = "SELECT * FROM users"; // Example query to get users
+                        $result = $conn->query($sql);
+                        if ($result->num_rows > 0) {
+                            while($row = $result->fetch_assoc()) {
+                                echo "<option value='{$row['user_id']}'>{$row['username']}</option>";
+                            }
+                        }
+                        ?>
+                    </select>
+                </div>
 
-        <label for="course_id">Course ID:</label><br>
-        <input type="number" id="course_id" name="course_id" required><br><br>
-
-        <label for="title">Title:</label><br>
-        <input type="text" id="title" name="title" required><br><br>
-
-        <label for="description">Description:</label><br>
+                <div class="form-group">
+                    <label for="title">Title:</label><br>
+                    <input type="text" id="title" name="title" required><br><br>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description:</label><br>
         <textarea id="description" name="description" required></textarea><br><br>
+                </div>
 
-        <label for="created_by">Created By:</label><br>
-        <input type="text" id="created_by" name="created_by" required><br><br>
+                <div class="form-group">
+                    <label for="created_by">Created By:</label><br>
+                    <input type="text" id="created_by" name="created_by" required><br><br>
+            
+                </div>
 
-        <label for="created_at">Created At:</label><br>
-        <input type="datetime-local" id="created_at" name="created_at" required><br><br>
-
+                <div class="form-group">
+                    <label for="created_at">Created At:</label><br>
+                    <input type="datetime-local" id="created_at" name="created_at" required><br><br>
+            
+                </div>
+        
+       
         <input type="submit" value="Create Forum">
     </form>
 </body>
