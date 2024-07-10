@@ -221,7 +221,7 @@
                     <li><a href="../../../backend/assignment form/" target="content-frame" onclick="setActive(this)">Assignments</a></li>
                     <li><a href="../../../backend/courseTimeTable/courseTimetable.php" target="content-frame" onclick="setActive(this)">Time Table</a></li>
                     <li><a href="../../../backend/forums/view_report.php" target="content-frame" onclick="setActive(this)">Forum</a></li>
-                    <li><a href="news.html" target="content-frame" onclick="setActive(this)">News</a></li>
+                    <li><a href="../../../backend/newsArticle/dashIndex.php" target="content-frame" onclick="setActive(this)">News</a></li>
                     <li><a href="settings.html" target="content-frame" onclick="setActive(this)">Settings</a></li>
                     <li><a href="../../../index.html">Logout</a></li>
                 </ul>
