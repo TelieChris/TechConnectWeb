@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin') {
-    header("Location: ../../pages/login.php");
+    header("Location: ../../backend/login.php");
     exit();
 }
 
@@ -20,22 +20,13 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$students = [];
-$staff = [];
+$lecturers = [];
 
-$sql_students = "SELECT user_id, username, email FROM users WHERE role = 'student'";
-$sql_staff = "SELECT user_id, username, email FROM users WHERE role = 'staff'";
+$sql_lecturers = "SELECT user_id, username FROM users WHERE role = 'lecturer'";
 
-if ($result = $conn->query($sql_students)) {
+if ($result = $conn->query($sql_lecturers)) {
     while ($row = $result->fetch_assoc()) {
-        $students[] = $row;
-    }
-    $result->free();
-}
-
-if ($result = $conn->query($sql_staff)) {
-    while ($row = $result->fetch_assoc()) {
-        $staff[] = $row;
+        $lecturers[] = $row;
     }
     $result->free();
 }
@@ -48,7 +39,7 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - TechConnect</title>
+    <title>Add Faculty - Admin Dashboard</title>
     <style>
         body {
             display: flex;
@@ -112,30 +103,38 @@ $conn->close();
             padding: 20px;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+        .form-container {
             background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 0 auto;
         }
 
-        table th, table td {
+        .form-container h2 {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"], textarea, select {
+            width: 100%;
             padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #E5E7EB;
-        }
-
-        table th {
-            background-color: #E5E7EB;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
         }
 
         button {
-            margin: 10px 5px;
             padding: 10px 20px;
             background-color: #2563EB;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
         }
 
@@ -162,65 +161,46 @@ $conn->close();
             </div>
             <nav>
                 <ul>
-                    <li><a href="AdminPage.php" class="active">Dashboard</a></li>
+                    <li><a href="AdminPage.php">Dashboard</a></li>
                     <li><a href="view_students.php">View Students</a></li>
                     <li><a href="view_staff.php">View Staff</a></li>
-                    <li><a href="faculty.php">Add faculity</a></li>
+                    <li><a href="faculty.php" class="active">Add Faculty</a></li>
                     <li><a href="view_faculty.php">View Faculties</a></li>
                     <li><a href="../../backend/logout.php">Logout</a></li>
                 </ul>
             </nav>
         </div>
         <div class="main-content">
-            <h2>Students List</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($students as $student): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($student['user_id']); ?></td>
-                        <td><?php echo htmlspecialchars($student['username']); ?></td>
-                        <td><?php echo htmlspecialchars($student['email']); ?></td>
-                        <td>
-                            <button>Edit</button>
-                            <button>Delete</button>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-
-            <h2>Staff Members List</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($staff as $staff_member): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($staff_member['user_id']); ?></td>
-                        <td><?php echo htmlspecialchars($staff_member['username']); ?></td>
-                        <td><?php echo htmlspecialchars($staff_member['email']); ?></td>
-                        <td>
-                            <button>Edit</button>
-                            <button>Delete</button>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+            <div class="form-container">
+                <h2>Add Faculty</h2>
+                <form action="process_add_faculty.php" method="POST">
+                    <label for="faculty_name">Faculty Name</label>
+                    <input type="text" id="faculty_name" name="name" required>
+                    
+                    <label for="faculty_description">Faculty Description</label>
+                    <textarea id="faculty_description" name="description" rows="4" required></textarea>
+                    
+                    <label for="head_of_faculty">Head of Faculty</label>
+                    <select id="head_of_faculty" name="head_of_faculty" required>
+                        <option value="">Select Head of Faculty</option>
+                        <?php foreach ($lecturers as $lecturer): ?>
+                            <option value="<?php echo htmlspecialchars($lecturer['username']); ?>">
+                                <?php echo htmlspecialchars($lecturer['username']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                    
+                    <button type="submit">Submit</button>
+                </form>
+                <?php
+                if (isset($_SESSION['message'])) {
+                    $message_type = $_SESSION['message_type'] == 'success' ? 'color: green;' : 'color: red;';
+                    echo "<p style='$message_type'>" . $_SESSION['message'] . "</p>";
+                    unset($_SESSION['message']);
+                    unset($_SESSION['message_type']);
+                }
+                ?>
+            </div>
         </div>
     </div>
     <footer>

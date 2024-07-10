@@ -20,22 +20,13 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$students = [];
-$staff = [];
+$faculties = [];
 
-$sql_students = "SELECT user_id, username, email FROM users WHERE role = 'student'";
-$sql_staff = "SELECT user_id, username, email FROM users WHERE role = 'staff'";
+$sql_faculties = "SELECT faculty_id, name, head_of_faculty, description FROM faculty";
 
-if ($result = $conn->query($sql_students)) {
+if ($result = $conn->query($sql_faculties)) {
     while ($row = $result->fetch_assoc()) {
-        $students[] = $row;
-    }
-    $result->free();
-}
-
-if ($result = $conn->query($sql_staff)) {
-    while ($row = $result->fetch_assoc()) {
-        $staff[] = $row;
+        $faculties[] = $row;
     }
     $result->free();
 }
@@ -48,7 +39,7 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - TechConnect</title>
+    <title>View Faculties - Admin Dashboard</title>
     <style>
         body {
             display: flex;
@@ -162,61 +153,33 @@ $conn->close();
             </div>
             <nav>
                 <ul>
-                    <li><a href="AdminPage.php" class="active">Dashboard</a></li>
+                    <li><a href="AdminPage.php">Dashboard</a></li>
                     <li><a href="view_students.php">View Students</a></li>
                     <li><a href="view_staff.php">View Staff</a></li>
-                    <li><a href="faculty.php">Add faculity</a></li>
-                    <li><a href="view_faculty.php">View Faculties</a></li>
+                    <li><a href="faculty.php">Add Faculty</a></li>
+                    <li><a href="view_faculty.php" class="active">View Faculties</a></li>
                     <li><a href="../../backend/logout.php">Logout</a></li>
                 </ul>
             </nav>
         </div>
         <div class="main-content">
-            <h2>Students List</h2>
+            <h2>Faculty List</h2>
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        
                         <th>Name</th>
-                        <th>Email</th>
-                        <th>Action</th>
+                        <th>Head of Factulty</th>
+                        <th>Description</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($students as $student): ?>
+                    <?php foreach ($faculties as $faculty): ?>
                     <tr>
-                        <td><?php echo htmlspecialchars($student['user_id']); ?></td>
-                        <td><?php echo htmlspecialchars($student['username']); ?></td>
-                        <td><?php echo htmlspecialchars($student['email']); ?></td>
-                        <td>
-                            <button>Edit</button>
-                            <button>Delete</button>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-
-            <h2>Staff Members List</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($staff as $staff_member): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($staff_member['user_id']); ?></td>
-                        <td><?php echo htmlspecialchars($staff_member['username']); ?></td>
-                        <td><?php echo htmlspecialchars($staff_member['email']); ?></td>
-                        <td>
-                            <button>Edit</button>
-                            <button>Delete</button>
-                        </td>
+                        
+                        <td><?php echo htmlspecialchars($faculty['name']); ?></td>
+                        <td><?php echo htmlspecialchars($faculty['head_of_faculty']); ?></td>
+                        <td><?php echo htmlspecialchars($faculty['description']); ?></td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>

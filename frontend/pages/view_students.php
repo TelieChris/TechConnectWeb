@@ -153,9 +153,11 @@ $conn->close();
             </div>
             <nav>
                 <ul>
-                    <li><a href="AdminPage.php">Dashboard</a></li>
-                    <li><a href="view_students.php" class="active">View Students</a></li>
+                    <li><a href="AdminPage.php" class="active">Dashboard</a></li>
+                    <li><a href="view_students.php">View Students</a></li>
                     <li><a href="view_staff.php">View Staff</a></li>
+                    <li><a href="faculty.php">Add faculity</a></li>
+                    <li><a href="view_faculty.php" class="active">View Faculties</a></li>
                     <li><a href="../../backend/logout.php">Logout</a></li>
                 </ul>
             </nav>
