@@ -49,6 +49,8 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - TechConnect</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         body {
             display: flex;
@@ -129,20 +131,6 @@ $conn->close();
             background-color: #E5E7EB;
         }
 
-        button {
-            margin: 10px 5px;
-            padding: 10px 20px;
-            background-color: #2563EB;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #1E3A8A;
-        }
-
         footer {
             background-color: #00173D;
             color: white;
@@ -162,16 +150,20 @@ $conn->close();
             </div>
             <nav>
                 <ul>
-                    <li><a href="AdminPage.php" class="active">Dashboard</a></li>
-                    <li><a href="view_students.php">View Students</a></li>
-                    <li><a href="view_staff.php">View Staff</a></li>
-                    <li><a href="../../backend/logout.php">Logout</a></li>
+                    <li><a href="AdminPage.php" class="active"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+                    <li><a href="view_students.php"><i class="bi bi-people"></i> View Students</a></li>
+                    <li><a href="view_staff.php"><i class="bi bi-person"></i> View Staff</a></li>
+                    <li><a href="../../backend/logout.php"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
                 </ul>
             </nav>
         </div>
         <div class="main-content">
+            <div class="alert alert-success" role="alert">
+                Welcome to the Admin Dashboard!
+            </div>
+
             <h2>Students List</h2>
-            <table>
+            <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -187,8 +179,8 @@ $conn->close();
                         <td><?php echo htmlspecialchars($student['username']); ?></td>
                         <td><?php echo htmlspecialchars($student['email']); ?></td>
                         <td>
-                            <button>Edit</button>
-                            <button>Delete</button>
+                            <button class="btn btn-warning btn-sm"><i class="bi bi-pencil"></i> Edit</button>
+                            <button class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Delete</button>
                         </td>
                     </tr>
                     <?php endforeach; ?>
@@ -196,7 +188,7 @@ $conn->close();
             </table>
 
             <h2>Staff Members List</h2>
-            <table>
+            <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -212,8 +204,8 @@ $conn->close();
                         <td><?php echo htmlspecialchars($staff_member['username']); ?></td>
                         <td><?php echo htmlspecialchars($staff_member['email']); ?></td>
                         <td>
-                            <button>Edit</button>
-                            <button>Delete</button>
+                            <button class="btn btn-warning btn-sm"><i class="bi bi-pencil"></i> Edit</button>
+                            <button class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Delete</button>
                         </td>
                     </tr>
                     <?php endforeach; ?>
@@ -224,5 +216,6 @@ $conn->close();
     <footer>
         <p>&copy; 2024 TechConnect. All rights reserved.</p>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
