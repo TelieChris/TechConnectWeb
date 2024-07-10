@@ -1,3 +1,14 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['username'])) {
+    // If user is not logged in, redirect to login page
+    header("Location: ../../../backend/login.php");
+    exit();
+}
+$username = $_SESSION['username'];
+$userRole = $_SESSION['role'];
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>

@@ -52,10 +52,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // Redirect based on role
                 if ($role == 'student') {
-                    header("Location: ../frontend/Dashboard/Student/StudentDashboard.html");
+                    header("Location: ../frontend/Dashboard/Student/StudentDashboard.php");
                     exit();
-                } else if ($role == 'lecturer' || $role == 'admin') {
-                    header("Location: ../frontend/Dashboard/Admin/index.html");
+                } else if ($role == 'lecturer') {
+                    header("Location: ../frontend/Dashboard/Admin/index.php");
+                    exit();
+                } else if ($role == 'admin') {
+                    header("Location: ../frontend/pages/AdminPage.php");
                     exit();
                 }
             } else {

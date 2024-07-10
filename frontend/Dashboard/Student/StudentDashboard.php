@@ -1,3 +1,14 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['username'])) {
+    // If user is not logged in, redirect to login page
+    header("Location: ../../../backend/login.php");
+    exit();
+}
+$username = $_SESSION['username'];
+$userRole = $_SESSION['role'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +28,6 @@
             width: 250px;
             background-color: #00073D;
             color: white;
-           
             display: flex;
             flex-direction: column;
             align-items: left;
@@ -76,7 +86,7 @@
             margin-top: 10px;
             border-radius: 10px;
             overflow: hidden;
-            background-color: white; /* Added white background */
+            background-color: white;
         }
 
         table th, table td {
@@ -144,7 +154,6 @@
             color: yellow;
         }
 
-
         @media (max-width: 768px) {
             .sidebar {
                 width: 100%;
@@ -185,102 +194,69 @@
                 font-size: 12px;
             }
         }
+        b{
+            text-transform: capitalize;
+        }
+        span img {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+            color:white;
+            }
+
     </style>
 </head>
-<body>
+<body>            
     <div class="container" style="display: flex;">
-    <div class="sidebar">
-        <div class="profile">
-            <!-- <img src="profile-pic.png" alt="Profile Picture"> -->
-            <p>Hi, Elie</p>
-            <p>23RP00761</p>
+        <div class="sidebar">
+            <div class="profile">
+                <!-- <img src="profile-pic.png" alt="Profile Picture"> -->
+                <p>Hi, <?php echo htmlspecialchars($username); ?></p>
+                <p>You logged in As: <b><?php echo htmlspecialchars($userRole); ?></b></p>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="home_page.html" target="content-frame" onclick="setActive(this)" class="active">Home</a></li>
+                    <li><a href="../../../backend/courses_form/view_course_student.php" target="content-frame" onclick="setActive(this)">My Courses</a></li>
+                    <li><a href="../../../backend/assignment form/" target="content-frame" onclick="setActive(this)">Assignments</a></li>
+                    <li><a href="../../../backend/courseTimeTable/courseTimetable.php" target="content-frame" onclick="setActive(this)">Time Table</a></li>
+                    <li><a href="../../../backend/forums/view_report.php" target="content-frame" onclick="setActive(this)">Forum</a></li>
+                    <li><a href="news.html" target="content-frame" onclick="setActive(this)">News</a></li>
+                    <li><a href="settings.html" target="content-frame" onclick="setActive(this)">Settings</a></li>
+                    <li><a href="../../../index.html">Logout</a></li>
+                </ul>
+            </nav>
         </div>
-        <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="../../../backend/courses_form/view_course_student.php" class="active">My Courses</a></li>
-                <li><a href="../../../backend/assignment form/">Assignments</a></li>
-                <li><a href="#">Time Table</a></li>
-                <li><a href="../../../backend/forums/view_report.php">Forum</a></li>
-                <li><a href="#">News</a></li>
-                <li><a href="#">Settings</a></li>
-                <li><a href="#" onclick="logout()">Logout</a></li>
-            </ul>
-        </nav>
-    </div>
-    <div class="main-content" style="margin: 50px;">
-        <h1>My Courses</h1>
-        <div class="courses">
-            <h2>Semester 01</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Module No</th>
-                        <th>Course Name</th>
-                        <th>Description</th>
-                        <th>Faculty</th>
-                        <th>Lecturer</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr onclick="showAlert('Module 01')">
-                        <td>Module 01</td>
-                        <td>PW management and Professional development</td>
-                        <td>Introduction to Professional Development</td>
-                        <td>ICT</td>
-                        <td>KANYANDEKWE</td>
-                        <td>Completed</td>
-                    </tr>
-                    <tr onclick="showAlert('Module 02')">
-                        <td>Module 02</td>
-                        <td>Machine learning</td>
-                        <td>Introduction to Machine learning</td>
-                        <td>ICT</td>
-                        <td>LEOPORD</td>
-                        <td>Completed</td>
-                    </tr>
-                    <tr onclick="showAlert('Module 03')">
-                        <td>Module 03</td>
-                        <td>Computational methods</td>
-                        <td></td>
-                        <td>ICT</td>
-                        <td>Joseph</td>
-                        <td>Completed</td>
-                    </tr>
-                    <tr onclick="showAlert('Module 04')">
-                        <td>Module 04</td>
-                        <td>Development Operations</td>
-                        <td></td>
-                        <td>ICT</td>
-                        <td>BONAVANTURE</td>
-                        <td>On going</td>
-                    </tr>
-                </tbody>
-            </table>
-            <button onclick="showAlert('Previous')">Previous</button>
-            <button onclick="showAlert('Next')">Next</button>
+        <div class="main-content" style="margin: 50px;">
+            <iframe src="home_page.html" name="content-frame" style="width: 100%; height: 500px; border: none;"></iframe>
         </div>
     </div>
-</div>
-<footer>
-    <div class="footer-container">
-        <h2>CONNECT WITH US</h2>
-        <hr>
-        <div class="contact-info">
-            <span class="contact-item"><img src="imgs/call.PNG" alt="Phone"> 250789294965</span>
-            <span class="contact-item"><img src="imgs/instagram.PNG" alt="Instagram"> techconnect</span>
-            <span class="contact-item"><img src="imgs/git.PNG" alt="GitHub"> techconnect250</span>
-            <span class="contact-item"><img src="imgs/facebook.PNG" alt="Facebook"> techconnect Rwanda</span>
-            <span class="contact-item"><img src="imgs/TEC.PNG" alt="LinkedIn"> techconnect Rwanda</span>
-            <span class="contact-item"><img src="imgs/Mail.PNG" alt="Email"> techconnect@gmail.com</span>
+    <footer>
+        <div class="footer-container">
+            <h2>CONNECT WITH US</h2>
+            <hr>
+            <div class="contact-info">
+                <span class="contact-item"><img src="../../../frontend/imgs/call.PNG" alt="Phone"> 250789294965</span>
+                <span class="contact-item"><img src="../../../frontend/imgs/instagram.PNG" alt="Instagram"> techconnect</span>
+                <span class="contact-item"><img src="../../../frontend/imgs/git.PNG" alt="GitHub"> techconnect250</span>
+                <span class="contact-item"><img src="../../../frontend/imgs/facebook.PNG" alt="Facebook"> techconnect Rwanda</span>
+                <span class="contact-item"><img src="../../../frontend/imgs/TEC.PNG" alt="LinkedIn"> techconnect Rwanda</span>
+                <span class="contact-item"><img src="../../../frontend/imgs/Mail.PNG" alt="Email"> techconnect@gmail.com</span>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 TechConnect. All rights reserved By Btech IT.</p>
+            </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 TechConnect. All rights reserved By Btech IT.</p>
-        </div>
-    </div>
-</footer>
+    </footer>
     <script>
+        function setActive(link) {
+            var links = document.querySelectorAll('nav ul li a');
+            links.forEach(function(l) {
+                l.classList.remove('active');
+            });
+            link.classList.add('active');
+        }
+
         function showAlert(message) {
             alert('You clicked on: ' + message);
         }
