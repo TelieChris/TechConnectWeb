@@ -62,12 +62,7 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'DockerCredentials', toolName: 'docker') {
-                        // Check if a container named 'techconnect' exists
-                        def containerExists = bat(script: 'docker ps -aq --filter "name=techconnect"', returnStdout: true).trim()
-                        if (containerExists) {
-                            bat "docker stop techconnect || echo 'No such container'"
-                            bat "docker rm techconnect || echo 'No such container'"
-                        }
+                        
                         // Run the new container with environment variables
                         bat """
                         docker run -d --name techconnect -p 8080:80 \
