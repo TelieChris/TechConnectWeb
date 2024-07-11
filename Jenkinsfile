@@ -62,15 +62,18 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'DockerCredentials', toolName: 'docker') {
-                        // Check if a container named 'techconnect' exists, then stop and remove it
-                        def containerExists = bat(script: 'docker ps -q --filter "name=techconnect"', returnStdout: true).trim()
+                        // Check if a container named 'techconnect' exists
+                        def containerExists = bat(script: 'docker ps -aq --filter "name=techconnect"', returnStdout: true).trim()
                         if (containerExists) {
                             bat "docker stop techconnect || echo 'No such container'"
                             bat "docker rm techconnect || echo 'No such container'"
                         }
+                        // Check if port 8080 is available, if not use port 8081
+                        def portInUse = bat(script: 'netstat -ano | findstr :8080', returnStdout: true).trim()
+                        def port = portInUse ? '8081' : '8080'
                         // Run the new container with environment variables
                         bat """
-                        docker run -d --name techconnect -p 8080:80 \
+                        docker run -d --name techconnect -p ${port}:80 \
                             -e DB_HOST=${DB_HOST} \
                             -e DB_NAME=${DB_NAME} \
                             -e DB_USER=${DB_USER} \
