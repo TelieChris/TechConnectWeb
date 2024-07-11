@@ -61,8 +61,8 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'DockerCredentials', toolName: 'docker') {
-                        // Stop and remove any existing container named 'techconnect'
-                        bat 'docker ps -q --filter "name=techconnect" | findstr . && docker stop techconnect && docker rm techconnect || echo "No existing container to stop"'
+                        // Stop and remove any existing container named 'techconnect " && docker rm techconnect || echo "No existing container to stop"'
+                        bat 'docker ps -q --filter "name=techconnect" | findstr . && docker stop techconnect"'
                         // Run the new container with environment variables
                         bat """
                         docker run -d --name techconnect -p 8080:80 \
