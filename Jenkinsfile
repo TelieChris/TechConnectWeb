@@ -61,16 +61,12 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'DockerCredentials', toolName: 'docker') {
-                        // Check if the container exists and then stop and remove it
-                        bat """
-                        if docker ps -a --format '{{.Names}}' | findstr /r /c:"^techconnect$" >nul 2>&1; then (
-                            echo "Stopping and removing existing container..."
-                            docker stop techconnect
-                            docker rm techconnect
-                        ) else (
-                            echo "No existing container to stop"
-                        )
-                        """
+                        // Check if a container named 'techconnect' exists, then stop and remove it
+                        def containerExists = bat(script: 'docker ps -q --filter "name=techconnect"', returnStdout: true).trim()
+                        if (containerExists) {
+                            bat "docker stop techconnect"
+                            bat "docker rm techconnect"
+                        }
                         // Run the new container with environment variables
                         bat """
                         docker run -d --name techconnect -p 8080:80 \
