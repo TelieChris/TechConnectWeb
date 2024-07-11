@@ -8,10 +8,13 @@ pipeline {
     environment {
         SCANNER_HOME = tool 'sonar-scanner'
         DOCKER_HUB_CREDENTIALS = credentials('DockerCredentials')
+        DB_HOST = 'sql12.freesqldatabase.com'
+        DB_NAME = 'sql12716221'
+        DB_USER = 'sql12716221'
+        DB_PASSWORD = 'FfJUdVvA73'
     }
     triggers {
-         cron('H */12 * * *') // This will schedule the build to run every 12 hours
-       // cron('H/5 * * * *') // This will schedule the build to run every 5 minutes
+        cron('H */12 * * *') // This will schedule the build to run every 12 hours
     }
 
     stages {
@@ -24,7 +27,7 @@ pipeline {
                     url: 'https://github.com/TelieChris/TechConnectWeb.git'
             }
         }
-        // -Dsonar.login=squ_6537e0a318ecb2797da51d4a33cb976eaf7661b9 \
+        
         stage('Test Using SonarQube') {
             steps {
                 script {
@@ -46,7 +49,6 @@ pipeline {
                 script {
                     withDockerRegistry(credentialsId: 'DockerCredentials', toolName: 'docker') {
                         bat 'docker --version'  // Check Docker version to ensure it is installed
-                        //bat 'docker network create technetwork'
                         bat 'docker build -t techconnect:latest -f Dockerfile .'
                         bat 'docker tag techconnect:latest 50604/techconnect:latest'
                         bat 'docker push 50604/techconnect:latest'
@@ -54,14 +56,22 @@ pipeline {
                 }
             }
         }
-        stage('Docker Deploy To container') {
+        
+        stage('Docker Deploy To Container') {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'DockerCredentials', toolName: 'docker') {
                         // Stop and remove any existing container named 'techconnect'
                         bat 'docker ps -q --filter "name=techconnect" | findstr . && docker stop techconnect && docker rm techconnect || echo "No existing container to stop"'
-                        // Run the new container
-                        bat "docker run -d --name techconnect -p 80:80 50604/techconnect:latest"
+                        // Run the new container with environment variables
+                        bat """
+                        docker run -d --name techconnect -p 8080:80 \
+                            -e DB_HOST=${DB_HOST} \
+                            -e DB_NAME=${DB_NAME} \
+                            -e DB_USER=${DB_USER} \
+                            -e DB_PASSWORD=${DB_PASSWORD} \
+                            50604/techconnect:latest
+                        """
                     }
                 }
             }

@@ -1,8 +1,8 @@
 <?php
-$host = 'sql12.freesqldatabase.com';
-$dbname = 'sql12716221';
-$user = 'sql12716221';
-$pass = 'FfJUdVvA73';
+$host = getenv('DB_HOST') ?: 'sql12.freesqldatabase.com';
+$dbname = getenv('DB_NAME') ?: 'sql12716221';
+$user = getenv('DB_USER') ?: 'sql12716221';
+$pass = getenv('DB_PASSWORD') ?: 'FfJUdVvA73';
 $port = 3306;
 
 // Create connection
