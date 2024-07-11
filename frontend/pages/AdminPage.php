@@ -150,10 +150,12 @@ $conn->close();
             </div>
             <nav>
                 <ul>
-                    <li><a href="AdminPage.php" class="active"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
-                    <li><a href="view_students.php"><i class="bi bi-people"></i> View Students</a></li>
-                    <li><a href="view_staff.php"><i class="bi bi-person"></i> View Staff</a></li>
-                    <li><a href="../../backend/logout.php"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+                    <li><a href="AdminPage.php" class="active">Dashboard</a></li>
+                    <li><a href="view_students.php">View Students</a></li>
+                    <li><a href="view_staff.php">View Staff</a></li>
+                    <li><a href="faculty.php">Add faculity</a></li>
+                    <li><a href="view_faculty.php">View Faculties</a></li>
+                    <li><a href="../../backend/logout.php">Logout</a></li>
                 </ul>
             </nav>
         </div>

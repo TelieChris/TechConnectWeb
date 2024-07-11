@@ -5,10 +5,10 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-$host = 'sql12.freesqldatabase.com';
-$dbname = 'sql12716221';
-$user = 'sql12716221';
-$pass = 'FfJUdVvA73';
+$host = getenv('DB_HOST') ?: 'sql12.freesqldatabase.com';
+$dbname = getenv('DB_NAME') ?: 'sql12716221';
+$user = getenv('DB_USER') ?: 'sql12716221';
+$pass = getenv('DB_PASSWORD') ?: 'FfJUdVvA73';
 $port = 3306;
 
 // Create connection
