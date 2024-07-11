@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +13,6 @@
     <div class="container mt-5">
         <h2>Sign In</h2>
         <?php 
-        session_start();
         if (isset($_SESSION['message'])): ?>
             <div class="alert alert-<?php echo $_SESSION['message_type']; ?>" role="alert">
                 <?php 
