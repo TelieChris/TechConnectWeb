@@ -19,18 +19,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Check connection
     if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-    $sql = "INSERT INTO forums (forum_id, course_id, title, description, created_by, created_at)
-            VALUES ('$forum_id', '$course_id', '$title', '$description', '$created_by', '$created_at')";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "New forum created successfully";
+        $message = '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="bi bi-exclamation-triangle-fill"></i> Connection failed: ' . $conn->connect_error . '
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>';
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
+        $sql = "INSERT INTO forums (forum_id, course_id, title, description, created_by, created_at)
+                VALUES ('$forum_id', '$course_id', '$title', '$description', '$created_by', '$created_at')";
 
-    $conn->close();
+        if ($conn->query($sql) === TRUE) {
+            $message = '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="bi bi-check-circle-fill"></i> New forum created successfully
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>';
+        } else {
+            $message = '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill"></i> Error: ' . $sql . '<br>' . $conn->error . '
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>';
+        }
+
+        $conn->close();
+    }
 }
 ?>
 
@@ -39,6 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <title>Create Forum</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 </head>
 <body>
     <div class="container mt-5">
@@ -62,22 +79,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             echo "<option value='{$row['forum_id']}'>{$row['title']}</option>";
                         }
                     }
+                    $conn->close();
                     ?>
                 </select>
             </div>
             <div class="form-group">
                 <label for="course_id">Course ID</label>
-                <select class="form-control" id="user_id" name="user_id" required>
-                    <option value="">Course ID</option>
-                    <!-- Populate user options from the database -->
+                <select class="form-control" id="course_id" name="course_id" required>
+                    <option value="">Select Course</option>
+                    <!-- Populate course options from the database -->
                     <?php
-                    $sql = "SELECT * FROM users"; // Example query to get users
+                    $conn = new mysqli('localhost', 'root', '', 'forum_db');
+                    if ($conn->connect_error) {
+                        die("Connection failed: " . $conn->connect_error);
+                    }
+                    $sql = "SELECT * FROM courses"; // Example query to get courses
                     $result = $conn->query($sql);
                     if ($result->num_rows > 0) {
                         while($row = $result->fetch_assoc()) {
-                            echo "<option value='{$row['user_id']}'>{$row['username']}</option>";
+                            echo "<option value='{$row['course_id']}'>{$row['course_name']}</option>";
                         }
                     }
+                    $conn->close();
                     ?>
                 </select>
             </div>
@@ -91,11 +114,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="form-group">
                 <label for="created_by">Created By</label>
-                 
-                <select class="form-control" id="user_id" name="created_by" required>
+                <select class="form-control" id="created_by" name="created_by" required>
                     <option value="">Select User</option>
                     <!-- Populate user options from the database -->
                     <?php
+                    $conn = new mysqli('localhost', 'root', '', 'forum_db');
+                    if ($conn->connect_error) {
+                        die("Connection failed: " . $conn->connect_error);
+                    }
                     $sql = "SELECT * FROM users"; // Example query to get users
                     $result = $conn->query($sql);
                     if ($result->num_rows > 0) {
@@ -103,10 +129,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             echo "<option value='{$row['user_id']}'>{$row['username']}</option>";
                         }
                     }
+                    $conn->close();
                     ?>
                 </select>
-            
-            
             </div>
             <div class="form-group">
                 <label for="created_at">Created At</label>

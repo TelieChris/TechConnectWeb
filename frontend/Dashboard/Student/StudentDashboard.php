@@ -14,7 +14,9 @@ $userRole = $_SESSION['role'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Courses</title>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             display: flex;
@@ -31,6 +33,7 @@ $userRole = $_SESSION['role'];
             display: flex;
             flex-direction: column;
             align-items: left;
+            transition: width 0.3s;
         }
 
         .profile img {
@@ -59,6 +62,13 @@ $userRole = $_SESSION['role'];
             padding: 10px;
             text-align: left;
             border-radius: 5px;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+
+        nav ul li a i {
+            margin-right: 10px;
         }
 
         nav ul li a.active, nav ul li a:hover {
@@ -182,6 +192,15 @@ $userRole = $_SESSION['role'];
             table th, table td {
                 padding: 5px;
             }
+
+            nav ul li a {
+                padding: 5px;
+                font-size: 14px;
+            }
+
+            .profile p {
+                font-size: 14px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -194,40 +213,40 @@ $userRole = $_SESSION['role'];
                 font-size: 12px;
             }
         }
-        b{
+
+        b {
             text-transform: capitalize;
         }
+
         span img {
             width: 20px;
             height: 20px;
             margin-right: 5px;
-            color:white;
-            }
-
+            color: white;
+        }
     </style>
 </head>
-<body>            
-    <div class="container" style="display: flex;">
+<body>
+    <div class="d-flex flex-column flex-sm-row flex-grow-1">
         <div class="sidebar">
             <div class="profile">
-                <!-- <img src="profile-pic.png" alt="Profile Picture"> -->
                 <p>Hi, <?php echo htmlspecialchars($username); ?></p>
                 <p>You logged in As: <b><?php echo htmlspecialchars($userRole); ?></b></p>
             </div>
             <nav>
-                <ul>
-                    <li><a href="home_page.html" target="content-frame" onclick="setActive(this)" class="active">Home</a></li>
-                    <li><a href="../../../backend/courses_form/view_course_student.php" target="content-frame" onclick="setActive(this)">My Courses</a></li>
-                    <li><a href="../../../backend/assignment form/" target="content-frame" onclick="setActive(this)">Assignments</a></li>
-                    <li><a href="../../../backend/courseTimeTable/courseTimetable.php" target="content-frame" onclick="setActive(this)">Time Table</a></li>
-                    <li><a href="../../../backend/forums/view_report.php" target="content-frame" onclick="setActive(this)">Forum</a></li>
-                    <li><a href="news.html" target="content-frame" onclick="setActive(this)">News</a></li>
-                    <li><a href="settings.html" target="content-frame" onclick="setActive(this)">Settings</a></li>
-                    <li><a href="../../../index.html">Logout</a></li>
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a href="home_page.html" target="content-frame" onclick="setActive(this)" class="nav-link active"><i class="bi bi-house"></i> Home</a></li>
+                    <li class="nav-item"><a href="../../../backend/courses_form/view_course_student.php" target="content-frame" onclick="setActive(this)" class="nav-link"><i class="bi bi-book"></i> My Courses</a></li>
+                    <li class="nav-item"><a href="../../../backend/assignment form/" target="content-frame" onclick="setActive(this)" class="nav-link"><i class="bi bi-pencil"></i> Assignments</a></li>
+                    <li class="nav-item"><a href="../../../backend/courseTimeTable/courseTimetable.php" target="content-frame" onclick="setActive(this)" class="nav-link"><i class="bi bi-calendar"></i> Time Table</a></li>
+                    <li class="nav-item"><a href="../../../backend/forums/view_report.php" target="content-frame" onclick="setActive(this)" class="nav-link"><i class="bi bi-chat"></i> Forum</a></li>
+                    <li class="nav-item"><a href="../../../backend/newsArticle/dashIndex.php" target="content-frame" onclick="setActive(this)" class="nav-link"><i class="bi bi-newspaper"></i> News</a></li>
+                    <li class="nav-item"><a href="settings.html" target="content-frame" onclick="setActive(this)" class="nav-link"><i class="bi bi-gear"></i> Settings</a></li>
+                    <li class="nav-item"><a href="../../../index.html" class="nav-link"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
                 </ul>
             </nav>
         </div>
-        <div class="main-content" style="margin: 50px;">
+        <div class="main-content flex-grow-1">
             <iframe src="home_page.html" name="content-frame" style="width: 100%; height: 500px; border: none;"></iframe>
         </div>
     </div>
@@ -248,39 +267,18 @@ $userRole = $_SESSION['role'];
             </div>
         </div>
     </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         function setActive(link) {
-            var links = document.querySelectorAll('nav ul li a');
-            links.forEach(function(l) {
-                l.classList.remove('active');
+            var links = document.querySelectorAll('.nav-link');
+            links.forEach(function(link) {
+                link.classList.remove('active');
             });
             link.classList.add('active');
-        }
-
-        function showAlert(message) {
-            alert('You clicked on: ' + message);
-        }
-
-        function logout() {
-            alert('You have been logged out.');
-            // Redirect to login page or handle logout functionality here
-        }
-
-        // Example of making the page content dynamically adjustable
-        window.addEventListener('resize', function() {
-            if (window.innerWidth <= 768) {
-                document.querySelector('.sidebar').style.width = '100%';
-            } else {
-                document.querySelector('.sidebar').style.width = '250px';
-            }
-        });
-
-        // Initial check
-        if (window.innerWidth <= 768) {
-            document.querySelector('.sidebar').style.width = '100%';
-        } else {
-            document.querySelector('.sidebar').style.width = '250px';
         }
     </script>
 </body>
 </html>
+
