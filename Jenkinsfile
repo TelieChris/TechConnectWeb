@@ -13,6 +13,7 @@ pipeline {
         DB_USER = 'sql12716221'
         DB_PASSWORD = 'FfJUdVvA73'
     }
+
     triggers {
         cron('H */12 * * *') // This will schedule the build to run every 12 hours
     }
@@ -61,11 +62,11 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'DockerCredentials', toolName: 'docker') {
-                        // Check if a container named 'techconnect' exists, then stop and remove it
-                        def containerExists = bat(script: 'docker ps -q --filter "name=techconnect"', returnStdout: true).trim()
+                        // Check if a container named 'techconnect' exists
+                        def containerExists = bat(script: 'docker ps -aq --filter "name=techconnect"', returnStdout: true).trim()
                         if (containerExists) {
-                            bat "docker stop techconnect"
-                            bat "docker rm techconnect"
+                            bat "docker stop techconnect || echo 'No such container'"
+                            bat "docker rm techconnect || echo 'No such container'"
                         }
                         // Run the new container with environment variables
                         bat """
