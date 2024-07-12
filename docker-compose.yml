@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    environment:
+      DB_HOST: sql12.freesqldatabase.com
+      DB_NAME: sql12716221
+      DB_USER: sql12716221
+      DB_PASSWORD: FfJUdVvA73
