@@ -21,9 +21,14 @@ body {width: 615px; font-family: Arial; letter-spacing: 1px; line-height: 20px;}
 <h1 class="demo-form-heading">Upload Assignment</h1>
 <form name="frmUpload" action="upload_assignment.php" method="POST" enctype="multipart/form-data">
   <div class="demo-form-row">
-      <label>Course_id: </label><br>
+      <label>Course_Name: </label><br>
       <textarea name="course_id" class="demo-form-field" rows="5" required></textarea>
   </div> 
+
+  <div class="demo-form-row">
+      <label>Uploaded At: </label><br>
+      <input type="date" name="uploaded_at" class="demo-form-field" required />
+  </div>
   <div class="demo-form-row">
       <label>Assignment File: </label><br>
       <input type="file" name="assignment_file" class="demo-form-field" required />
