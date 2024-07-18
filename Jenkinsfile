@@ -36,7 +36,7 @@ pipeline {
                     bat """
                     ${scannerHome}/bin/sonar-scanner \
                         -Dsonar.host.url=http://127.0.0.1:9000/ \
-                        -Dsonar.login=squ_a11267a60aa461c2681a42470344d21aba256abd \
+                        -Dsonar.login=squ_2fd9258d53da95b22c5215265ca58eed702661b3 \
                         -Dsonar.projectKey=techconnect \
                         -Dsonar.projectName=techconnect \
                         -Dsonar.java.binaries=.
