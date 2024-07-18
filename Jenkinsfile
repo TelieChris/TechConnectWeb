@@ -63,11 +63,11 @@ pipeline {
                 script {
                     withDockerRegistry(credentialsId: 'DockerCredentials', toolName: 'docker') {
                         // Check if a container named 'techconnect' exists
-                        def containerExists = bat(script: 'docker ps -aq --filter "name=techconnect"', returnStdout: true).trim()
-                        if (containerExists) {
-                            bat "docker stop techconnect || echo 'No such container'"
-                            bat "docker rm techconnect || echo 'No such container'"
-                        }
+                        // def containerExists = bat(script: 'docker ps -aq --filter "name=techconnect"', returnStdout: true).trim()
+                        // if (containerExists) {
+                        //     bat "docker stop techconnect || echo 'No such container'"
+                        //     bat "docker rm techconnect || echo 'No such container'"
+                        // }
                         // Check if port 8080 is available, if not use port 8081
                         def portInUse = bat(script: 'netstat -ano | findstr :8080', returnStdout: true).trim()
                         def port = portInUse ? '8081' : '8080'
