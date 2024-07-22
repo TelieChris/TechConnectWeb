@@ -68,7 +68,7 @@ pipeline {
                             bat "docker stop techconnect || echo 'No such container'"
                             bat "docker rm techconnect || echo 'No such container'"
                         }
-                        Check if port 8080 is available, if not use port 8081
+                        // Check if port 8080 is available, if not use port 8081
                         def portInUse = bat(script: 'netstat -ano | findstr :8080', returnStdout: true).trim()
                         def port = portInUse ? '8081' : '8080'
                         // Run the new container with environment variables
