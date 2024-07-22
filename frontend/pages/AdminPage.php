@@ -1,12 +1,12 @@
 <?php
-// session_start();
+session_start();
 
-// if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin') {
-//     header("Location: ../../pages/login.php");
-//     exit();
-// }
+if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin') {
+    header("Location: ../../pages/login.php");
+    exit();
+}
 
-// $username = $_SESSION['username'];
+$username = $_SESSION['username'];
 
 $host = 'sql12.freesqldatabase.com';
 $dbname = 'sql12716221';
