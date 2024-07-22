@@ -3,55 +3,74 @@ require_once("db.php");
 ?>
 <html>
 <head>
-<title>Assignments</title>
-<style>
-body { width: 615px; font-family: arial; letter-spacing: 1px; line-height: 20px; }
-.tbl-qa { width: 100%; font-size: 0.9em; background-color: #f5f5f5; }
-.tbl-qa th.table-header { padding: 5px; text-align: left; padding: 10px; }
-.tbl-qa .table-row td { padding: 10px; background-color: #FDFDFD; vertical-align: top; }
-.button_link { color: #FFF; text-decoration: none; background-color: #428a8e; padding: 10px; }
-</style>
+    <title>PHP PDO CRUD</title>
+    <style>
+        body { width: 615px; font-family: arial; letter-spacing: 1px; line-height: 20px; }
+        .tbl-qa { width: 100%; font-size: 0.9em; background-color: #f5f5f5; }
+        .tbl-qa th.table-header { padding: 5px; text-align: left; padding: 10px; }
+        .tbl-qa .table-row td { padding: 10px; background-color: #FDFDFD; vertical-align: top; }
+        .button_link { color: #FFF; text-decoration: none; background-color: #428a8e; padding: 8px 12px; border-radius: 5px; }
+        .ajax-action-links { margin-right: 10px; }
+    </style>
 </head>
 <body>
-    <h1><i>All Submitted Asignments</i></h1>
-<?php   
-$pdo_statement = $pdo_conn->prepare("SELECT * FROM student_assignments ORDER BY id DESC"); 
-$pdo_statement->execute();
-$result = $pdo_statement->fetchAll();
-?>
-<div style="text-align:right; margin:20px 0px;">
-    <a href="index.php" class="button_link">
-        <img src="crud-icon/add.png" title="Add New Record" style="vertical-align:bottom;" /> Back to teacher's page
-    </a>
-</div>
-<table class="tbl-qa">
-  <thead>
-    <tr>
-      <th class="table-header" width="10%">ID</th>
-      <th class="table-header" width="30%">Course ID</th>
-      <th class="table-header" width="30%">File Name</th>
-      <th class="table-header" width="20%">Uploaded At</th>
-      <th class="table-header" width="10%">Download</th>
-    </tr>
-  </thead>
-  <tbody id="table-body">
-<?php
-if (!empty($result)) {
-    $a12 = 1;
-    foreach ($result as $row) {
-?>
-    <tr class="table-row">
-        <td><?php echo $a12++; ?></td>
-        <td><?php echo htmlspecialchars($row["course_id"]); ?></td>
-        <td><?php echo htmlspecialchars(basename($row["file_url"])); ?></td>
-        <td><?php echo htmlspecialchars($row["uploaded_at"]); ?></td>
-        <td><a href="<?php echo htmlspecialchars($row["file_url"]); ?>" download>Download</a></td>
-    </tr>
-<?php
-    }
-}
-?>
-  </tbody>
-</table>
+    <div style="text-align:right;margin:20px 0px;">
+        <a href="stud_index.php" class="button_link">
+            <img src="crud-icon/add.png" title="View All Submitted Assignments" style="vertical-align:bottom;" /> View All Submitted Assignments
+        </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="index.php" class="button_link">
+            <img src="crud-icon/add.png" title="Create New Assignment" style="vertical-align:bottom;" /> Back to teacher's page
+        </a>
+    </div>
+    <table class="tbl-qa">
+        <thead>
+            <tr>
+                <th class="table-header" width="5%">Submission_ID</th>
+                <th class="table-header" width="30%">Assignment_ID</th>
+                <th class="table-header" width="35%">Student_id</th>
+                <th class="table-header" width="15%">Submission_date</th>
+                <th class="table-header" width="15%">File</th>
+                <th class="table-header" width="15%">Grade</th>
+                <th class="table-header" width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+            <?php
+            $pdo_statement = $pdo_conn->prepare("SELECT * FROM submissions ORDER BY submission_id DESC");
+            $pdo_statement->execute();
+            $result = $pdo_statement->fetchAll();
+
+            if (!empty($result)) {
+                foreach ($result as $row) {
+                    ?>
+                    <tr class="table-row">
+                        <td><?php echo htmlspecialchars($row["submission_id"]); ?></td>
+                        <td><?php echo htmlspecialchars($row["assignment_id"]); ?></td>
+                        <td><?php echo htmlspecialchars($row["student_id"]); ?></td>
+                        <td><?php echo htmlspecialchars($row["submission_date"]); ?></td>
+                        <td><?php echo htmlspecialchars($row["file_url"]); ?></td>
+                        <td><?php echo htmlspecialchars($row["grade"]); ?></td>
+                        <td><a href="<?php echo htmlspecialchars($row["file_url"]); ?>" download>Download</a></td>
+                        <td>
+                            <a class="ajax-action-links" href='submit_edit.php?submission_id=<?php echo htmlspecialchars($row['submission_id']); ?>'>
+                                <img src="crud-icon/edit.png" title="Edit" />
+                            </a>
+                            <a class="ajax-action-links" href='submit_delete.php?submission_id=<?php echo htmlspecialchars($row['submission_id']); ?>'>
+                                <img src="crud-icon/delete.png" title="Delete" />
+                            </a>
+                        </td>
+                    </tr>
+                    <?php
+                }
+            } else {
+                ?>
+                <tr class="table-row">
+                    <td colspan="6">No records found.</td>
+                </tr>
+                <?php
+            }
+            ?>
+        </tbody>
+    </table>
 </body>
 </html>

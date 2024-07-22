@@ -37,8 +37,6 @@ $result = $pdo_statement->fetchAll();
             <th class="table-header" width="35%">Description</th>
             <th class="table-header" width="15%">Due Date</th>
             <th class="table-header" width="10%">File URL</th>
-            <th class="table-header" width="5%">Action</th>
-
            
             
         </tr>
@@ -63,14 +61,7 @@ if (!empty($result)) {
                     N/A
                 <?php } ?>
             </td>
-            <td>
-                <a class="ajax-action-links" href='edit.php?assignment_id=<?php echo htmlspecialchars($row['assignment_id']); ?>'>
-                    <img src="crud-icon/edit.png" title="Edit" />
-                </a>
-                <a class="ajax-action-links" href='delete.php?assignment_id=<?php echo htmlspecialchars($row['assignment_id']); ?>'>
-                    <img src="crud-icon/delete.png" title="Delete" />
-                </a>
-            </td>
+            
             <td>
                 <?php if (!empty($row["attachment"])) { ?>
                     <form action="<?php echo htmlspecialchars($row["attachment"]); ?>" method="post" target="_blank">

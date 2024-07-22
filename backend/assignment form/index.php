@@ -27,7 +27,7 @@ $result = $pdo_statement->fetchAll();
 
 </video> <br><br>
 <a href="stud_index.php" class="button_link"><img src="crud-icon/add.png" title="Add New Record" style="vertical-align:bottom;" /> View All Submitted Assignments</a>
-<a href="add.php" class="button_link"><img src="crud-icon/add.png" title="Add New Record" style="vertical-align:bottom;" /> Create</a>
+<a href="add.php" class="button_link"><img src="crud-icon/add.png" title="Add New Record" style="vertical-align:bottom;" /> Create a new Assignment</a>
 </div>
 <table class="tbl-qa">
     <thead>

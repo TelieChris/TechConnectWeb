@@ -1,0 +1,73 @@
+<html>
+<head>
+<title>PHP PDO CRUD - Add New Record</title>
+<style>
+body {width: 615px; font-family: Arial; letter-spacing: 1px; line-height: 20px;}
+.button_link {color: #FFF; text-decoration: none; background-color: #428a8e; padding: 10px;}
+.frm-add {border: #c3bebe 1px solid; padding: 30px;}
+.demo-form-heading {margin-top: 0px; font-weight: 500;} 
+.demo-form-row {margin-top: 20px;}
+.demo-form-field {width: 300px; padding: 10px;}
+.demo-form-submit {color: #FFF; background-color: #414444; padding: 10px 50px; border: 0px; cursor: pointer;}
+</style>
+</head>
+<body>
+<div style="margin: 20px 0px; text-align: right;">
+<a href="stude_index.php" class="button_link"><img src="crud-icon/add.png" title="Add New Record" style="vertical-align:bottom;" /> View All Submitted Assignments</a>
+  &nbsp;&nbsp;&nbsp; <a href="stud_index.php" class="button_link">View All Posted Assignments</a></div>
+<div class="frm-add">
+<h1 class="demo-form-heading">Add New Record</h1>
+<form name="frmAdd" action="" method="POST" enctype="multipart/form-data">
+  <div class="form-group">
+      <label for="assignment_id">Assignment</label>
+      <select class="form-control" id="assignment_id" name="assignment_id" required>
+          <option value="">Select assignment</option>
+          <!-- Populate assignment options from the database -->
+          <?php
+          require_once("db.php");
+          $sql = "SELECT * FROM assignments";
+          $result = $pdo_conn->query($sql);
+          if ($result->rowCount() > 0) {
+              while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                  echo "<option value='{$row['assignment_id']}'>{$row['assignment_id']} - {$row['title']}</option>";
+              }
+          }
+          ?>
+      </select>
+  </div>
+  <div class="form-group">
+      <label for="student_id">Student</label>
+      <select class="form-control" id="student_id" name="student_id" required>
+          <option value="">Select student</option>
+          <!-- Populate student options from the database -->
+          <?php
+          require_once("db.php");
+          $sql = "SELECT * FROM users";
+          $result = $pdo_conn->query($sql);
+          if ($result->rowCount() > 0) {
+              while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                  echo "<option value='{$row['user_id']}'>{$row['user_id']} - {$row['name']}</option>";
+              }
+          }
+          ?>
+      </select>
+  </div>
+  <div class="demo-form-row">
+      <label>Submission Date: </label><br>
+      <input type="date" name="submission_date" class="demo-form-field" required />
+  </div>
+  
+  <div class="demo-form-row">
+      <label>Attach File: </label><br>
+      <input type="file" name="file" class="demo-form-field" required />
+  </div>
+
+  <div class="demo-form-row">
+      <label>Grade: </label><br>
+      <input type="number" step="0.01" name="grade" class="demo-form-field" required />
+  </div>
+     
+</form>
+</div> 
+</body>
+</html>

@@ -53,7 +53,7 @@ body {width: 615px; font-family: Arial; letter-spacing: 1px; line-height: 20px;}
           <!-- Populate course options from the database -->
           <?php
           require_once("db.php");
-          $sql = "SELECT * FROM assignments";
+          $sql = "SELECT * FROM courses";
           $result = $pdo_conn->query($sql);
           if ($result->rowCount() > 0) {
               while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
@@ -77,9 +77,10 @@ body {width: 615px; font-family: Arial; letter-spacing: 1px; line-height: 20px;}
   </div>
   
   <div class="demo-form-row">
-        <label>Attachment: </label><br>
-        <input type="file" name="attachment" class="demo-form-field" required />
-    </div>
+      <label>File URL: </label><br>
+      <input type="text" name="file_url" class="demo-form-field" required />
+  </div>
+  
     
   <div class="demo-form-row">
       <input name="add_record" type="submit" value="Add" class="demo-form-submit">
